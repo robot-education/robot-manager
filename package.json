@@ -3,21 +3,19 @@
     "version": "1.0",
     "main": "app.js",
     "dependencies": {
-        "body-parser": "^1.12.4",
-        "classnames": "^2.2.6",
-        "connect-redis": "^7.1.0",
-        "cookie-parser": "^1.3.5",
-        "cors": "^2.8.5",
-        "date-utils": "^1.2.17",
+        "cookie-parser": "^1.4.6",
         "dotenv": "^8.2.0",
-        "hbs": "^4.2.0",
+        "express": "^4.18.2",
+        "express-session": "^1.17.3",
+        "fs": "^0.0.1-security",
         "https": "^1.0.0",
         "passport": "^0.6.0",
-        "passport-oauth2": "^1.1.2",
         "passport-onshape": "^1.1.0",
-        "redis": "^0.12.1",
-        "url": "^0.10.3",
-        "uuid": "^2.0.3"
+        "request-promise": "^4.2.6"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "test": "node src/app.js"
     },
     "engines": {
         "node": ">= 6.11.1"
