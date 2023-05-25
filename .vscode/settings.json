@@ -1,0 +1,23 @@
+{
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "cSpell.words": [
+        "orize",
+        "TOKENTIMEOUT"
+    ],
+    "cSpell.flagWords": [
+        "coincentric",
+        "expresion"
+    ],
+    "files.associations": {
+        "*.json": "jsonc"
+    },
+    "files.eol": "\n",
+}

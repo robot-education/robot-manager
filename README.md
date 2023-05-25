@@ -1,2 +1,2 @@
 # robot-assembly
-Code for performming automatic assembly operations in Onshape.
+Code for performing automatic assembly operations in Onshape.
