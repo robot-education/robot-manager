@@ -2,14 +2,16 @@
   "name": "robot-helper",
   "version": "0.1.0",
   "description": "A sample app to assist with competitive robot design.",
-  "main": "src/bin/www",
+  "main": "src/bin/www.js",
+  "type": "module",
   "scripts": {
-    "start": "src/bin/www",
+    "start": "src/bin/www.js",
     "heroku-postbuild": "rollup -c"
   },
   "author": "Alex Kempen <alex.bookreader@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "node-fetch": "^2.6.1",
