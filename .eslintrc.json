@@ -5,15 +5,29 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "parserOptions": {
         "ecmaVersion": 11,
-        "sourceType": "module",
-        "allowImportExportEverywhere": true
+        "sourceType": "module"
     },
-    "rules": {}
+    "compilerOptions": {
+        "allowImportingTsExtensions": true
+    },
+    "rules": {
+        "semi": [
+            2,
+            "always"
+        ]
+    }
 }
