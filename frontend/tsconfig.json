@@ -19,11 +19,8 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "rootDir": "./src"
+        "rootDir": "./src",
     },
-    "include": [
-        "./frontend/src"
-    ],
     "resolve": {
         "extensions": [
             ".ts",

@@ -1,9 +1,17 @@
-import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import "./App.css";
+
+import "normalize.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
+// import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 
 import { AssemblyApp } from "./AssemblyApp";
+import { FocusStyleManager } from "@blueprintjs/core";
 
 export function App() {
-  return (<AssemblyApp />);
+  FocusStyleManager.onlyShowFocusOnTabs();
+  return (
+    <AssemblyApp />
+  );
 }
