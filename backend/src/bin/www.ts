@@ -2,7 +2,7 @@
 import { readFileSync } from "fs";
 import { createServer } from "https";
 
-import * as config from "../config";
+import config from "../config";
 import { app } from "../app";
 
 const port = config.port || 3000;

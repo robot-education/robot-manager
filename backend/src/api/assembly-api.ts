@@ -1,5 +1,5 @@
-import * as api from "./api";
-import * as utils from "../utils";
+import api from "./api";
+import utils from "../utils";
 
 /**
  * Fetches elements of an assembly.

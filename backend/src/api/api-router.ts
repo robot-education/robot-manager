@@ -1,5 +1,5 @@
 import express from "express";
-import * as autoAssembly from "../auto-assembly/auto-assembly";
+import autoAssembly from "../auto-assembly/auto-assembly";
 
 export const apiRouter = express.Router();
 

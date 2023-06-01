@@ -1,7 +1,7 @@
 // @ts-nocheck
 
-import * as path from "path";
-import * as uuid from "uuid";
+import path from "path";
+import uuid from "uuid";
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
@@ -9,9 +9,9 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import OnshapeStrategy from "passport-onshape";
 
-import * as config from "./config";
+import config from "./config";
 
-import * as apiRouter from "./api/api-router";
+import apiRouter from "./api/api-router";
 
 export const app = express();
 

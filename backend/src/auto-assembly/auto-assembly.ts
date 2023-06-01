@@ -1,7 +1,7 @@
-import * as api from "../api/api";
-import * as assemblyApi from "../api/assembly-api";
-import * as assemblyFeature from "../api/assembly-feature";
-import * as assemblyScript from "./assembly-script";
+import api from "../api/api";
+import assemblyApi from "../api/assembly-api";
+import assemblyFeature from "../api/assembly-feature";
+import assemblyScript from "./assembly-script";
 
 /**
  * TODOs:
