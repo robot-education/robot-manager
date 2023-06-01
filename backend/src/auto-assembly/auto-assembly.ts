@@ -19,11 +19,6 @@ import * as assemblyScript from "./assembly-script";
  * I can write api calls and route through a python server, sure
  */
 
-interface MirrorMate {
-    startMateId: string;
-    endMateId: string;
-}
-
 /**
  * Executes auto assembly.
  * 
