@@ -1,10 +1,6 @@
-export const format = function (o: any, maxLevel?: number, level?: number) {
-    if (typeof level == "undefined") {
-        level = 0;
-    }
-    if (typeof maxLevel == "undefined") {
-        maxLevel = 0;
-    }
+export function format(o: any, maxLevel?: number, level?: number) {
+    level = level ?? 0;
+    maxLevel = maxLevel ?? 0;
 
     var str = '';
     // Remove this if you don't want the pre tag, but make sure to remove

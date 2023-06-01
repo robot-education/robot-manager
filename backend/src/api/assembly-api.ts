@@ -1,5 +1,4 @@
 import api from "./api";
-import utils from "../utils";
 
 /**
  * Fetches elements of an assembly.
