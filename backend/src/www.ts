@@ -2,8 +2,8 @@
 import { readFileSync } from "fs";
 import { createServer } from "https";
 
-import config from "../config";
-import { app } from "../app";
+import config from "./config";
+import { app } from "./app";
 
 const port = config.port || 3000;
 
