@@ -2,10 +2,8 @@
 cd frontend
 npm run build
 
-rm -rf ../backend/dist/public
-mkdir -p ../backend/dist/public/
-cp -r build/* ../backend/dist/public
-
-# mv ../backend/public/index.html ../backend/public/application/
+rm -rf ../backend/src/public
+mkdir -p ../backend/src/public
+cp -r build/* ../backend/src/public
 
 echo "Complete!"

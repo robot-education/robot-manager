@@ -10,6 +10,7 @@
     "files.autoSaveDelay": 1000,
     "cSpell.allowCompoundWords": true,
     "cSpell.words": [
+        "blueprintjs",
         "nocheck",
         "orize",
         "resave",

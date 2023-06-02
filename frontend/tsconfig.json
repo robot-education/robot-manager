@@ -21,6 +21,9 @@
         "jsx": "react-jsx",
         "rootDir": "./src",
     },
+    "include": {
+        "frontend/src/*"
+    },
     "resolve": {
         "extensions": [
             ".ts",
