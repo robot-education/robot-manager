@@ -1,15 +1,15 @@
-import path from "path";
-import uuid from "uuid";
-import express from "express";
-import session from "express-session";
-import bodyParser from "body-parser";
+let path = require("path");
+let uuid = require("uuid");
+let express = require("express");
+let session = require("express-session");
+let bodyParser = require("body-parser");
 
-import passport from "passport";
-import OnshapeStrategy from "passport-onshape";
+let passport = require("passport");
+let OnshapeStrategy = require("passport-onshape");
 
-import config from "./config";
+let config = require("./config");
 
-export const app = express();
+const app = express();
 
 app.use(bodyParser.json());
 
@@ -60,10 +60,15 @@ app.get("/oauthRedirect", passport.authenticate("onshape", { failureRedirect: "/
     return res.redirect(req.session.state.url);
 });
 
+app.get("/", (req, res) => {
+    console.log("Hello world.");
+    res.redirect("/application");
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/grantDenied", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "grant-denied.html"));
+    res.sendFile(path.join(__dirname, "public", "grant-denied.html"));
 });
 
 // custom authentication middleware
@@ -90,5 +95,23 @@ function authenticationHandler(req, res, next) {
 app.use(authenticationHandler);
 
 app.get("/application", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "application.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+const apiRouter = express.Router();
+apiRouter.use("/api", async (req, res) => {
+    const url = config.backendUrl + req.url // + "?token=" + req.user.accessToken;
+    const response = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ documentId: "1234567890" }),
+    });
+    const json = await response.json();
+    console.log(json);
+    res.json(json);
+});
+
+app.use(apiRouter);
+
+module.exports = { app };

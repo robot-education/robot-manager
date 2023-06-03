@@ -1,47 +1,48 @@
-import { config } from "dotenv";
-config();
+require("dotenv").config();
 
 /**
  * The port this application should run on. This may be `undefined`.
  */
-export const port = process.env.PORT;
+const port = process.env.PORT;
 
 /**
  * The parent URL of the Onshape API endpoints, e.g. `https://cad.onshape.com/api`.
  */
-export const onshapeApiUrl = process.env.API_URL;
+const onshapeApiUrl = process.env.API_URL;
 
 /**
  * The absolute URL of the OAuth callback URL. This will be the `/oauthRedirect` endpoint
  * on this server, e.g. `https://your-machine.example.com/oauthRedirect`.
  */
-export const oauthCallbackUrl = process.env.OAUTH_CALLBACK_URL;
+const oauthCallbackUrl = process.env.OAUTH_CALLBACK_URL;
 
 /**
  * The Client ID of this application as registered in the Onshape Dev Portal.
  */
-export const oauthClientId = process.env.OAUTH_CLIENT_ID;
+const oauthClientId = process.env.OAUTH_CLIENT_ID;
 
 /**
  * The Client Secret of this application as registered in the Onshape Dev Portal.
  */
-export const oauthClientSecret = process.env.OAUTH_CLIENT_SECRET;
+const oauthClientSecret = process.env.OAUTH_CLIENT_SECRET;
 
 /**
  * The parent URL of the Onshape OAuth endpoints, e.g. `https://oauth.onshape.com`.
  */
-export const oauthUrl = process.env.OAUTH_URL;
+const oauthUrl = process.env.OAUTH_URL;
 
 /**
  * The secret for handling session data.
  */
-export const sessionSecret = process.env.SESSION_SECRET;
+const sessionSecret = process.env.SESSION_SECRET;
+
+const backendUrl = process.env.BACKEND_URL;
 
 /**
  * The URL of the webhook callback URL. This will be the `/api/event` endpoint on
  * this server, e.g. `https://your-machine.example.com`.
  */
-// export const webhookCallbackRootUrl = process.env.WEBHOOK_CALLBACK_ROOT_URL;
+// const webhookCallbackRootUrl = process.env.WEBHOOK_CALLBACK_ROOT_URL;
 
 /**
  * Checks if the given string is a URL. A string considered a URL if it can be parsed
@@ -122,10 +123,22 @@ if (!isValidHttpUrl(oauthCallbackUrl)) errors.push("OAUTH_CALLBACK_URL is not a 
 if (!isValidString(oauthClientId)) errors.push("OAUTH_CLIENT_ID must have content");
 if (!isValidString(oauthClientSecret)) errors.push("OAUTH_CLIENT_SECRET must have content");
 if (!isValidHttpUrl(oauthUrl)) errors.push("OAUTH_URL is not a valid HTTP(S) URL");
+if (!isValidHttpUrl(backendUrl)) errors.push("BACKEND_URL is not a valid HTTP(S) URL");
 if (!isValidString(sessionSecret)) errors.push("SESSION_SECRET must have content");
 // if (!isValidHttpUrl(webhookCallbackRootUrl)) errors.push("WEBHOOK_CALLBACK_ROOT_URL is not a valid HTTP(S) URL");
 
 // Halt execution if the app isn"t correctly configured.
 if (errors.length !== 0) {
     throw new Error("Invalid configuration: " + errors.join(", "));
+}
+
+module.exports = {
+    port,
+    onshapeApiUrl,
+    oauthCallbackUrl,
+    oauthClientId,
+    oauthClientSecret,
+    oauthUrl,
+    backendUrl,
+    sessionSecret,
 }
