@@ -30,9 +30,13 @@ export function AssemblyApp(): JSX.Element {
 
 export async function executeAutoAssembly() {
     const query = new URLSearchParams(window.location.search);
-    console.log("Executing!");
-    const extract = ({ documentId, workspaceId }: any) => { return { documentId, workspaceId }; };
-    const result = await post("autoassembly", extract(query));
+    const body = {
+        documentId: query.get("documentId"),
+        workspaceId: query.get("workspaceId"),
+        workspaceOrVersion: query.get("workspaceOrVersion"),
+        elementId: query.get("elementId"),
+    };
+    const result = await post("autoassembly", body);
     console.log(result);
 }
 
@@ -46,11 +50,13 @@ export async function post(
 ): Promise<any> {
     try {
         // @ts-ignore
-        const normalizedUrl = `https://localhost:3000/api/${apiPath}` + new URLSearchParams(query ?? {});
+        const normalizedUrl = `https://localhost:3000/api/${apiPath}?` + new URLSearchParams(query ?? {});
         const result = await fetch(normalizedUrl, {
             method: "POST",
             mode: "cors",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(body),
         });
         return await result.json();

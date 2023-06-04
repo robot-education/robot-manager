@@ -1,17 +1,17 @@
-let path = require("path");
-let uuid = require("uuid");
-let express = require("express");
-let session = require("express-session");
-let bodyParser = require("body-parser");
+const path = require("path");
+const uuid = require("uuid");
+const express = require("express");
+const session = require("express-session");
+const proxy = require("express-http-proxy");
 
-let passport = require("passport");
-let OnshapeStrategy = require("passport-onshape");
+const passport = require("passport");
+const OnshapeStrategy = require("passport-onshape");
 
-let config = require("./config");
+const config = require("./config");
 
 const app = express();
 
-app.use(bodyParser.json());
+const bodyParser = require("body-parser");
 
 app.set("trust proxy", 1); // To allow to run correctly behind Heroku
 
@@ -60,11 +60,6 @@ app.get("/oauthRedirect", passport.authenticate("onshape", { failureRedirect: "/
     return res.redirect(req.session.state.url);
 });
 
-app.get("/", (req, res) => {
-    console.log("Hello world.");
-    res.redirect("/application");
-});
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/grantDenied", (_, res) => {
@@ -98,20 +93,16 @@ app.get("/application", (_, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-const apiRouter = express.Router();
-apiRouter.use("/api", async (req, res) => {
-    const url = config.backendUrl + req.url // + "?token=" + req.user.accessToken;
-    const response = await fetch(url, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ documentId: "1234567890" }),
-    });
-    const json = await response.json();
-    console.log(json);
-    res.json(json);
-});
+app.use("/api", proxy(config.backendUrl, {
+    proxyReqPathResolver: (req) => {
+        let parts = req.url.split('?');
+        let queryString = parts[1];
+        const updatedPath = parts[0];
+        return updatedPath + (queryString ? '?' + queryString : '?') + "token=" + req.user.accessToken;
+    }
+}));
 
-app.use(apiRouter);
+// must come after proxy?
+// app.use(bodyParser.json());
 
 module.exports = { app };
