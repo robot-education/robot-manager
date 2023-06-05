@@ -5,18 +5,38 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "name": "Launch frontend",
             "request": "launch",
-            "name": "Launch Program",
+            "runtimeArgs": [
+                "--prefix",
+                "frontend",
+                "start"
+            ],
+            "runtimeExecutable": "npm",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/dist/bin/www.js",
-            "preLaunchTask": "npm: build",
-            "sourceMaps": true,
-            "outFiles": [
-                "${workspaceFolder}/dist/*.js"
-            ]
-        }
+            "type": "node"
+        },
+        {
+            "name": "Launch server",
+            "request": "launch",
+            "runtimeArgs": [
+                "--prefix",
+                "backend",
+                "start"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "command": "bash scripts/build_frontend.sh",
+            "name": "Build frontend",
+            "request": "launch",
+            "type": "node-terminal"
+        },
     ]
 }

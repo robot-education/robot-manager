@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
-    Navbar,
-    NavbarGroup,
-    NavbarHeading,
     Button,
     Card,
     H5,
     // ProgressBar,
 } from "@blueprintjs/core";
 
+import { AppNavbar } from "./AppNavbar";
+import { makeElementPath, post } from "./api";
+
 export function AssemblyApp(): JSX.Element {
+    const executeAutoAssembly = useCallback(async () => {
+        const result = await post("auto-assembly", makeElementPath());
+        console.log(result);
+    }, []);
+
     return (<>
-        <Navbar>
-            <NavbarGroup>
-                <NavbarHeading>Robot manager</NavbarHeading>
-            </NavbarGroup>
-        </Navbar>
+        <AppNavbar />
         <Card>
-            <H5>Auto assembly</H5>
+            <H5>Execute auto assembly</H5>
             <p>
                 Execute the auto assembly script on parts in the current assembly.
             </p>
@@ -28,39 +29,3 @@ export function AssemblyApp(): JSX.Element {
     </>);
 }
 
-export async function executeAutoAssembly() {
-    const query = new URLSearchParams(window.location.search);
-    const body = {
-        documentId: query.get("documentId"),
-        workspaceId: query.get("workspaceId"),
-        workspaceOrVersion: query.get("workspaceOrVersion"),
-        elementId: query.get("elementId"),
-    };
-    const result = await post("autoassembly", body);
-    console.log(result);
-}
-
-/**
- * Makes a post request to the backend.
- */
-export async function post(
-    apiPath: string,
-    body: object = {},
-    query: Record<string, string | boolean> = {}
-): Promise<any> {
-    try {
-        // @ts-ignore
-        const normalizedUrl = `https://localhost:3000/api/${apiPath}?` + new URLSearchParams(query ?? {});
-        const result = await fetch(normalizedUrl, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body),
-        });
-        return await result.json();
-    } catch (err) {
-        return { error: err };
-    }
-}
