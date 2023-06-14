@@ -16,14 +16,13 @@ export async function post(
             body: JSON.stringify(body),
         });
         return await result.json();
-    } catch (err) {
-        return { error: err };
+    } catch (error) {
+        return { error };
     }
 }
 
 interface ElementPath {
     documentId: string,
-    workspaceOrVersion: string,
     workspaceId: string,
     elementId: string
 }
@@ -33,7 +32,6 @@ export function makeElementPath(): ElementPath {
     return {
         documentId: query.get("documentId") ?? "",
         workspaceId: query.get("workspaceId") ?? "",
-        workspaceOrVersion: query.get("workspaceOrVersion") ?? "",
         elementId: query.get("elementId") ?? "",
     };
 }

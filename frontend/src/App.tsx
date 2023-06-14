@@ -4,13 +4,16 @@ import "./App.css";
 
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
-// import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+
+import "@blueprintjs/icons";
 
 import { FocusStyleManager } from "@blueprintjs/core";
 
 import { AssemblyApp } from "./AssemblyApp";
 import { PartStudioApp } from "./PartStudioApp";
 import { AppNavbar } from "./AppNavbar";
+
+// Icons.load(["share", "arrow-right"]);
 
 enum AppType {
   Assembly,
@@ -20,22 +23,20 @@ enum AppType {
 export function App() {
   FocusStyleManager.onlyShowFocusOnTabs();
 
-
   const [appType, setAppType] = useState<AppType | undefined>(undefined);
 
   const fetchAppType = () => {
     const query = new URLSearchParams(window.location.search)
-    console.log(query.get("type"));
     if (query.get("type") === "assembly") {
       return AppType.Assembly;
     }
     else if (query.get("type") === "partstudio") {
       return AppType.PartStudio;
     }
+    return undefined;
   }
 
   useEffect(() => { setAppType(fetchAppType()); }, []);
-
 
   const fetchApp = useCallback(() => {
     switch (appType) {

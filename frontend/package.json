@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^5.0.0-alpha.6",
+    "@blueprintjs/core": "^5.0.0-beta.0",
+    "@blueprintjs/icons": "^5.0.0-beta.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.34",
     "@types/react": "^18.2.7",

@@ -12,10 +12,8 @@
                 "frontend",
                 "start"
             ],
+            "console": "integratedTerminal",
             "runtimeExecutable": "npm",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
             "type": "node"
         },
         {
@@ -26,17 +24,9 @@
                 "backend",
                 "start"
             ],
+            "console": "integratedTerminal",
             "runtimeExecutable": "npm",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
             "type": "node"
-        },
-        {
-            "command": "bash scripts/build_frontend.sh",
-            "name": "Build frontend",
-            "request": "launch",
-            "type": "node-terminal"
         },
     ]
 }
