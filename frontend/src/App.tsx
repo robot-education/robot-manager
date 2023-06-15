@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import * as React from "react";
 
-import "./App.css";
+import "./app.scss";
 
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
@@ -9,11 +9,10 @@ import "@blueprintjs/icons";
 
 import { FocusStyleManager } from "@blueprintjs/core";
 
-import { AssemblyApp } from "./AssemblyApp";
-import { PartStudioApp } from "./PartStudioApp";
-import { AppNavbar } from "./AppNavbar";
+import { AssemblyApp } from "./assembly_app";
+import { PartStudioApp } from "./part_studio_app";
+import { AppNavbar } from "./app_navbar";
 
-// Icons.load(["share", "arrow-right"]);
 
 enum AppType {
   Assembly,
@@ -23,7 +22,7 @@ enum AppType {
 export function App() {
   FocusStyleManager.onlyShowFocusOnTabs();
 
-  const [appType, setAppType] = useState<AppType | undefined>(undefined);
+  const [appType, setAppType] = React.useState<AppType | undefined>(undefined);
 
   const fetchAppType = () => {
     const query = new URLSearchParams(window.location.search)
@@ -36,9 +35,9 @@ export function App() {
     return undefined;
   }
 
-  useEffect(() => { setAppType(fetchAppType()); }, []);
+  React.useEffect(() => { setAppType(fetchAppType()); }, []);
 
-  const fetchApp = useCallback(() => {
+  const fetchApp = React.useCallback(() => {
     switch (appType) {
       case AppType.Assembly: {
         return <AssemblyApp />;

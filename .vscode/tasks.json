@@ -4,8 +4,8 @@
         {
             "label": "build frontend",
             "command": "bash scripts/build_frontend.sh",
-            // "args": [],
-            "type": "shell"
+            "type": "shell",
+            "problemMatcher": []
         }
     ]
 }

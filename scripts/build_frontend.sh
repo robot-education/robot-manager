@@ -1,6 +1,6 @@
 #! /bin/bash
 cd frontend
-npm run build
+npm run build:staging
 
 rm -rf ../backend/src/public
 mkdir -p ../backend/src/public

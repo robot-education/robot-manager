@@ -8,19 +8,18 @@ import {
     DialogBody,
     DialogFooter,
     FormGroup,
-    H5,
-    Icon,
+    H4,
     InputGroup,
     NonIdealState,
-    NonIdealStateIconSize,
     Spinner,
     Tooltip,
 } from "@blueprintjs/core";
 
-import { AppNavbar } from "./AppNavbar";
+import { AppNavbar } from "./app_navbar";
+import { NonIdealStateOverride } from "./components/non_ideal_state_override";
 import { makeElementPath, post } from "./api";
 
-enum State {
+enum MenuState {
     NORMAL,
     EXECUTING,
     FINISHED
@@ -29,8 +28,8 @@ enum State {
 export function PartStudioApp(): JSX.Element {
     const [autoAssemble, setAutoAssemble] = useState(true);
     const [assemblyName, setAssemblyName] = useState("Assembly");
-    const [state, setState] = useState(State.NORMAL);
-    const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>(undefined);
+    const [state, setState] = useState(MenuState.NORMAL);
+    const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>();
 
     const executeGenerateAssembly = useCallback(async () => {
         const execute = async () => {
@@ -42,27 +41,29 @@ export function PartStudioApp(): JSX.Element {
                 await post("auto-assembly", assemblyPath);
             }
         }
-        setState(State.EXECUTING);
+        setState(MenuState.EXECUTING);
         await execute();
-        setState(State.FINISHED);
+        setState(MenuState.FINISHED);
     }, [autoAssemble, assemblyName]);
 
-    const renderExecuteDialog = (
-        <Dialog isOpen={state === State.FINISHED || state === State.EXECUTING}
-            canEscapeKeyClose={state === State.FINISHED}
-            canOutsideClickClose={state === State.FINISHED}
-            isCloseButtonShown={state === State.FINISHED}
-            onClose={() => setState(State.NORMAL)}
+
+    const executeDialog = (
+        <Dialog isOpen={state === MenuState.FINISHED || state === MenuState.EXECUTING}
+            canEscapeKeyClose={state === MenuState.FINISHED}
+            canOutsideClickClose={state === MenuState.FINISHED}
+            isCloseButtonShown={state === MenuState.FINISHED}
+            onClose={() => setState(MenuState.NORMAL)}
             title="Generate assembly"
         >
             <DialogBody useOverflowScrollContainer={false}>
-                {state === State.EXECUTING ? (<NonIdealState
+                {state === MenuState.EXECUTING ? (<NonIdealState
                     icon={<Spinner intent="primary" />}
                     title="Generating assembly"
-                    action={<Button text="Abort" intent="danger" icon="cross" onClick={() => setState(State.NORMAL)} />}
+                    action={<Button text="Abort" intent="danger" icon="cross" onClick={() => setState(MenuState.NORMAL)} />}
                 />) : (
-                    <NonIdealState
-                        icon={<Icon icon="tick" intent="success" size={NonIdealStateIconSize.STANDARD} />}
+                    <NonIdealStateOverride
+                        icon="tick"
+                        iconIntent="success"
                         title="Assembly generated"
                         description={"Remember to fix a part in the assembly to lock it in place."}
                     />
@@ -70,21 +71,21 @@ export function PartStudioApp(): JSX.Element {
             </DialogBody>
             <DialogFooter
                 minimal={true}
-                actions={state === State.FINISHED ? (<>
+                actions={state === MenuState.FINISHED ? (<>
                     <Button
                         text="Open assembly"
                         intent="primary"
                         icon="share"
                         onClick={() => {
                             window.open(assemblyUrl);
-                            setState(State.NORMAL);
+                            setState(MenuState.NORMAL);
                         }}
                     />
                     <Button
                         text="Close"
                         intent="success"
                         icon="tick"
-                        onClick={() => setState(State.NORMAL)}
+                        onClick={() => setState(MenuState.NORMAL)}
                     />
                 </>) : null}
             />
@@ -93,7 +94,7 @@ export function PartStudioApp(): JSX.Element {
     return (<>
         <AppNavbar />
         <Card>
-            <H5>Generate assembly</H5>
+            <H4>Generate assembly</H4>
             <p>
                 Generate an assembly from the current part studio.
             </p>
@@ -117,7 +118,7 @@ export function PartStudioApp(): JSX.Element {
             </FormGroup>
             <Button text="Execute" intent="primary" type="submit" rightIcon="arrow-right" onClick={executeGenerateAssembly} />
         </Card >
-        {renderExecuteDialog}
+        {executeDialog}
     </>);
 }
 

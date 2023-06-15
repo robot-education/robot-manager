@@ -3,11 +3,10 @@ import React, { useCallback } from "react";
 import {
     Button,
     Card,
-    H5,
-    // ProgressBar,
+    H4,
 } from "@blueprintjs/core";
 
-import { AppNavbar } from "./AppNavbar";
+import { AppNavbar } from "./app_navbar";
 import { makeElementPath, post } from "./api";
 
 export function AssemblyApp(): JSX.Element {
@@ -19,7 +18,7 @@ export function AssemblyApp(): JSX.Element {
     return (<>
         <AppNavbar />
         <Card>
-            <H5>Execute auto assembly</H5>
+            <H4>Execute auto assembly</H4>
             <p>
                 Execute the auto assembly script on parts in the current assembly.
             </p>
