@@ -1,17 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 
-import "./app.scss";
+import './app.scss';
 
-import "normalize.css";
-import "@blueprintjs/core/lib/css/blueprint.css";
+import 'normalize.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
-import "@blueprintjs/icons";
+import { FocusStyleManager } from '@blueprintjs/core';
 
-import { FocusStyleManager } from "@blueprintjs/core";
-
-import { AssemblyApp } from "./assembly_app";
-import { PartStudioApp } from "./part_studio_app";
-import { AppNavbar } from "./app_navbar";
+import { AssemblyApp } from './assembly_app';
+import { PartStudioApp } from './part_studio_app';
+import { AppNavbar } from './app_navbar';
 
 
 enum AppType {
@@ -26,10 +25,10 @@ export function App() {
 
   const fetchAppType = () => {
     const query = new URLSearchParams(window.location.search)
-    if (query.get("type") === "assembly") {
+    if (query.get('type') === 'assembly') {
       return AppType.Assembly;
     }
-    else if (query.get("type") === "partstudio") {
+    else if (query.get('type') === 'partstudio') {
       return AppType.PartStudio;
     }
     return undefined;

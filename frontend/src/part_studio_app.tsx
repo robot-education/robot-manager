@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 
 import {
     Button,
@@ -13,11 +13,11 @@ import {
     NonIdealState,
     Spinner,
     Tooltip,
-} from "@blueprintjs/core";
+} from '@blueprintjs/core';
 
-import { AppNavbar } from "./app_navbar";
-import { NonIdealStateOverride } from "./components/non_ideal_state_override";
-import { makeElementPath, post } from "./api";
+import { AppNavbar } from './app_navbar';
+import { NonIdealStateOverride } from './components/non_ideal_state_override';
+import { makeElementPath, post } from './api';
 
 enum MenuState {
     NORMAL,
@@ -27,18 +27,18 @@ enum MenuState {
 
 export function PartStudioApp(): JSX.Element {
     const [autoAssemble, setAutoAssemble] = useState(true);
-    const [assemblyName, setAssemblyName] = useState("Assembly");
+    const [assemblyName, setAssemblyName] = useState('Assembly');
     const [state, setState] = useState(MenuState.NORMAL);
     const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>();
 
     const executeGenerateAssembly = useCallback(async () => {
         const execute = async () => {
             const elementPath = makeElementPath();
-            const result = await post("generate-assembly", { ...elementPath, name: assemblyName });
+            const result = await post('generate-assembly', { ...elementPath, name: assemblyName });
             const assemblyPath = { documentId: elementPath.documentId, workspaceId: elementPath.workspaceId, elementId: result.elementId };
             setAssemblyUrl(`https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`);
             if (autoAssemble) {
-                await post("auto-assembly", assemblyPath);
+                await post('auto-assembly', assemblyPath);
             }
         }
         setState(MenuState.EXECUTING);
@@ -53,19 +53,19 @@ export function PartStudioApp(): JSX.Element {
             canOutsideClickClose={state === MenuState.FINISHED}
             isCloseButtonShown={state === MenuState.FINISHED}
             onClose={() => setState(MenuState.NORMAL)}
-            title="Generate assembly"
+            title='Generate assembly'
         >
             <DialogBody useOverflowScrollContainer={false}>
                 {state === MenuState.EXECUTING ? (<NonIdealState
-                    icon={<Spinner intent="primary" />}
-                    title="Generating assembly"
-                    action={<Button text="Abort" intent="danger" icon="cross" onClick={() => setState(MenuState.NORMAL)} />}
+                    icon={<Spinner intent='primary' />}
+                    title='Generating assembly'
+                    action={<Button text='Abort' intent='danger' icon='cross' onClick={() => setState(MenuState.NORMAL)} />}
                 />) : (
                     <NonIdealStateOverride
-                        icon="tick"
-                        iconIntent="success"
-                        title="Assembly generated"
-                        description={"Remember to fix a part in the assembly to lock it in place."}
+                        icon='tick'
+                        iconIntent='success'
+                        title='Assembly generated'
+                        description={'Remember to fix a part in the assembly to lock it in place.'}
                     />
                 )}
             </DialogBody>
@@ -73,18 +73,18 @@ export function PartStudioApp(): JSX.Element {
                 minimal={true}
                 actions={state === MenuState.FINISHED ? (<>
                     <Button
-                        text="Open assembly"
-                        intent="primary"
-                        icon="share"
+                        text='Open assembly'
+                        intent='primary'
+                        icon='share'
                         onClick={() => {
                             window.open(assemblyUrl);
                             setState(MenuState.NORMAL);
                         }}
                     />
                     <Button
-                        text="Close"
-                        intent="success"
-                        icon="tick"
+                        text='Close'
+                        intent='success'
+                        icon='tick'
                         onClick={() => setState(MenuState.NORMAL)}
                     />
                 </>) : null}
@@ -99,24 +99,24 @@ export function PartStudioApp(): JSX.Element {
                 Generate an assembly from the current part studio.
             </p>
             <FormGroup
-                label="Assembly name"
-                labelFor="assembly-name"
-                labelInfo="(required)"
+                label='Assembly name'
+                labelFor='assembly-name'
+                labelInfo='(required)'
             >
-                <Tooltip content={"The name of the generated assembly"}>
-                    <InputGroup id="assembly-name" value={assemblyName} onChange={handleStringChange(setAssemblyName)} />
+                <Tooltip content={'The name of the generated assembly'}>
+                    <InputGroup id='assembly-name' value={assemblyName} onChange={handleStringChange(setAssemblyName)} />
                 </Tooltip>
             </FormGroup>
             <FormGroup
-                label="Execute auto assembly"
-                labelFor="auto-assemble"
+                label='Execute auto assembly'
+                labelFor='auto-assemble'
                 inline={true}
             >
-                <Tooltip content={"Whether to execute auto assembly on the generated assembly"}>
-                    <Checkbox id="auto-assemble" checked={autoAssemble} onClick={handleBooleanChange(setAutoAssemble)} />
+                <Tooltip content={'Whether to execute auto assembly on the generated assembly'}>
+                    <Checkbox id='auto-assemble' checked={autoAssemble} onClick={handleBooleanChange(setAutoAssemble)} />
                 </Tooltip>
             </FormGroup>
-            <Button text="Execute" intent="primary" type="submit" rightIcon="arrow-right" onClick={executeGenerateAssembly} />
+            <Button text='Execute' intent='primary' type='submit' rightIcon='arrow-right' onClick={executeGenerateAssembly} />
         </Card >
         {executeDialog}
     </>);

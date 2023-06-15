@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import {
     Navbar,
     NavbarGroup,
     NavbarHeading
-} from "@blueprintjs/core";
+} from '@blueprintjs/core';
 
 export function AppNavbar(): JSX.Element {
     return (

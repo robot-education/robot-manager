@@ -1,7 +1,7 @@
-import * as React from "react";
-import * as Blueprint from "@blueprintjs/core";
+import * as React from 'react';
+import * as Blueprint from '@blueprintjs/core';
 
-import classNames from "classnames";
+import classNames from 'classnames';
 
 export interface IdealStateProps extends Blueprint.NonIdealStateProps {
     /**
@@ -19,12 +19,12 @@ export class NonIdealStateOverride extends Blueprint.AbstractPureComponent<Ideal
     public constructor(props: IdealStateProps) {
         super(props);
         this.nonIdealState = new Blueprint.NonIdealState(props);
-        this.nonIdealState["maybeRenderVisual"] = this.maybeRenderVisualOverride;
+        this.nonIdealState['maybeRenderVisual'] = this.maybeRenderVisualOverride;
     }
 
     public static defaultProps: Partial<IdealStateProps> = {
         iconSize: Blueprint.NonIdealStateIconSize.STANDARD,
-        layout: "vertical"
+        layout: 'vertical'
     };
 
     public render() {

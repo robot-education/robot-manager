@@ -10,9 +10,9 @@ export async function post(
         // @ts-ignore
         const normalizedUrl = `https://localhost:3000/api/${apiPath}?` + new URLSearchParams(query ?? {});
         const result = await fetch(normalizedUrl, {
-            method: "POST",
-            mode: "cors",
-            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         });
         return await result.json();
@@ -30,8 +30,8 @@ interface ElementPath {
 export function makeElementPath(): ElementPath {
     const query = new URLSearchParams(window.location.search);
     return {
-        documentId: query.get("documentId") ?? "",
-        workspaceId: query.get("workspaceId") ?? "",
-        elementId: query.get("elementId") ?? "",
+        documentId: query.get('documentId') ?? '',
+        workspaceId: query.get('workspaceId') ?? '',
+        elementId: query.get('elementId') ?? '',
     };
 }
