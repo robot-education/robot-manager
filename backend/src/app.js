@@ -67,6 +67,7 @@ app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/grantDenied', (_, res) => {
+    // TODO: Add an actual grant denied page
     res.sendFile(path.join(__dirname, 'public', 'grant-denied.html'));
 });
 
@@ -94,16 +95,14 @@ app.get('/application', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+/**
+ * Redirects /api calls to the python backend.
+ */
 app.use('/api', proxy(config.backendUrl, {
     proxyReqOptDecorator: (options, req) => {
         options.headers['Authentication'] = 'Basic ' + req.user.accessToken;
         return options;
     },
-    // proxyReqPathResolver: (req) => {
-    //     let parts = req.url.split('?');
-    //     let queryString = parts[1];
-    //     return parts[0] + '?' + (queryString ?? '') + 'token=' + req.user.accessToken;
-    // }
 }));
 
 

@@ -131,7 +131,7 @@ public
 
 # Additional files
 .DS_Store
-dist/
 **/.env
-
+dist/
 https-cert/
+backend/src/public/

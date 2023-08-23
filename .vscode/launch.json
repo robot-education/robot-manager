@@ -4,29 +4,17 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Launch frontend",
-            "request": "launch",
-            "runtimeArgs": [
-                "--prefix",
-                "frontend",
-                "start"
-            ],
-            "console": "integratedTerminal",
-            "runtimeExecutable": "npm",
-            "type": "node"
-        },
-        {
-            "name": "Launch server",
-            "request": "launch",
-            "runtimeArgs": [
-                "--prefix",
-                "backend",
-                "start"
-            ],
-            "console": "integratedTerminal",
-            "runtimeExecutable": "npm",
-            "type": "node"
-        },
+        // {
+        //     "name": "Launch frontend",
+        //     "request": "launch",
+        //     "runtimeArgs": [
+        //         "--prefix",
+        //         "frontend",
+        //         "start"
+        //     ],
+        //     "console": "integratedTerminal",
+        //     "runtimeExecutable": "npm",
+        //     "type": "node"
+        // },
     ]
 }

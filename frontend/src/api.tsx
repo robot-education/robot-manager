@@ -23,6 +23,7 @@ export async function post(
 
 interface ElementPath {
     documentId: string,
+    workspaceOrVersion: string,
     workspaceId: string,
     elementId: string
 }
@@ -31,6 +32,7 @@ export function makeElementPath(): ElementPath {
     const query = new URLSearchParams(window.location.search);
     return {
         documentId: query.get('documentId') ?? '',
+        workspaceOrVersion: query.get('workspaceOrVersion') ?? 'w',
         workspaceId: query.get('workspaceId') ?? '',
         elementId: query.get('elementId') ?? '',
     };

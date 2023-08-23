@@ -6,6 +6,18 @@
             "command": "bash scripts/build_frontend.sh",
             "type": "shell",
             "problemMatcher": []
+        },
+        {
+            "label": "Launch server",
+            "command": "npm run start --prefix backend",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "Launch frontend",
+            "command": "npm run start --prefix frontend",
+            "type": "shell",
+            "problemMatcher": []
         }
     ]
 }
