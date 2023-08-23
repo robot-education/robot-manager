@@ -4,15 +4,15 @@
 export async function post(
     apiPath: string,
     body: object = {},
-    query: Record<string, string | boolean> = {}
+    query: Record<string, string | boolean> = {},
 ): Promise<any> {
     try {
         // @ts-ignore
         const normalizedUrl = `https://localhost:3000/api/${apiPath}?` + new URLSearchParams(query ?? {});
         const result = await fetch(normalizedUrl, {
-            method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            mode: "cors",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
         return await result.json();
@@ -22,18 +22,18 @@ export async function post(
 }
 
 interface ElementPath {
-    documentId: string,
-    workspaceOrVersion: string,
-    workspaceId: string,
-    elementId: string
+    documentId: string;
+    workspaceOrVersion: string;
+    workspaceId: string;
+    elementId: string;
 }
 
-export function makeElementPath(): ElementPath {
+export function getElementPath(): ElementPath {
     const query = new URLSearchParams(window.location.search);
     return {
-        documentId: query.get('documentId') ?? '',
-        workspaceOrVersion: query.get('workspaceOrVersion') ?? 'w',
-        workspaceId: query.get('workspaceId') ?? '',
-        elementId: query.get('elementId') ?? '',
+        documentId: query.get("documentId") ?? "",
+        workspaceOrVersion: query.get("workspaceOrVersion") ?? "w",
+        workspaceId: query.get("workspaceId") ?? "",
+        elementId: query.get("elementId") ?? "",
     };
 }
