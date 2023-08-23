@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as Blueprint from '@blueprintjs/core';
 
-import { AppNavbar } from './app_navbar';
+import { AppNavbar } from './app-navbar';
 import { makeElementPath, post } from './api';
 
 export function AssemblyApp(): JSX.Element {
     const executeAutoAssembly = React.useCallback(async () => {
         const result = await post('auto-assembly', makeElementPath());
-        console.log(result);
     }, []);
 
     return (<>

@@ -15,8 +15,8 @@ import {
     Tooltip,
 } from '@blueprintjs/core';
 
-import { AppNavbar } from './app_navbar';
-import { NonIdealStateOverride } from '../components/non_ideal_state_override';
+import { AppNavbar } from './app-navbar';
+import { NonIdealStateOverride } from '../components/non-ideal-state-override';
 import { makeElementPath, post } from './api';
 
 enum MenuState {
@@ -28,7 +28,7 @@ enum MenuState {
 export function PartStudioApp(): JSX.Element {
     const [autoAssemble, setAutoAssemble] = useState(true);
     const [assemblyName, setAssemblyName] = useState('Assembly');
-    const [state, setState] = useState(MenuState.NORMAL);
+    const [menuState, setMenuState] = useState(MenuState.NORMAL);
     const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>();
 
     const executeGenerateAssembly = useCallback(async () => {
@@ -41,25 +41,25 @@ export function PartStudioApp(): JSX.Element {
                 await post('auto-assembly', assemblyPath);
             }
         }
-        setState(MenuState.EXECUTING);
+        setMenuState(MenuState.EXECUTING);
         await execute();
-        setState(MenuState.FINISHED);
+        setMenuState(MenuState.FINISHED);
     }, [autoAssemble, assemblyName]);
 
 
     const executeDialog = (
-        <Dialog isOpen={state === MenuState.FINISHED || state === MenuState.EXECUTING}
-            canEscapeKeyClose={state === MenuState.FINISHED}
-            canOutsideClickClose={state === MenuState.FINISHED}
-            isCloseButtonShown={state === MenuState.FINISHED}
-            onClose={() => setState(MenuState.NORMAL)}
+        <Dialog isOpen={menuState === MenuState.FINISHED || menuState === MenuState.EXECUTING}
+            canEscapeKeyClose={menuState === MenuState.FINISHED}
+            canOutsideClickClose={menuState === MenuState.FINISHED}
+            isCloseButtonShown={menuState === MenuState.FINISHED}
+            onClose={() => setMenuState(MenuState.NORMAL)}
             title='Generate assembly'
         >
             <DialogBody useOverflowScrollContainer={false}>
-                {state === MenuState.EXECUTING ? (<NonIdealState
+                {menuState === MenuState.EXECUTING ? (<NonIdealState
                     icon={<Spinner intent='primary' />}
                     title='Generating assembly'
-                    action={<Button text='Abort' intent='danger' icon='cross' onClick={() => setState(MenuState.NORMAL)} />}
+                    action={<Button text='Abort' intent='danger' icon='cross' onClick={() => setMenuState(MenuState.NORMAL)} />}
                 />) : (
                     <NonIdealStateOverride
                         icon='tick'
@@ -71,21 +71,21 @@ export function PartStudioApp(): JSX.Element {
             </DialogBody>
             <DialogFooter
                 minimal={true}
-                actions={state === MenuState.FINISHED ? (<>
+                actions={menuState === MenuState.FINISHED ? (<>
                     <Button
                         text='Open assembly'
                         intent='primary'
                         icon='share'
                         onClick={() => {
                             window.open(assemblyUrl);
-                            setState(MenuState.NORMAL);
+                            setMenuState(MenuState.NORMAL);
                         }}
                     />
                     <Button
                         text='Close'
                         intent='success'
                         icon='tick'
-                        onClick={() => setState(MenuState.NORMAL)}
+                        onClick={() => setMenuState(MenuState.NORMAL)}
                     />
                 </>) : null}
             />

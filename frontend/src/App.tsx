@@ -8,9 +8,9 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 import { FocusStyleManager } from '@blueprintjs/core';
 
-import { AssemblyApp } from './assembly_app';
-import { PartStudioApp } from './part_studio_app';
-import { AppNavbar } from './app_navbar';
+import { AssemblyApp } from './assembly-app';
+import { PartStudioApp } from './part-studio-app';
+import { AppNavbar } from './app-navbar';
 
 
 enum AppType {
