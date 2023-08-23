@@ -6,9 +6,9 @@ require("dotenv").config();
 const port = process.env.PORT;
 
 /**
- * The parent URL of the Onshape API endpoints, e.g. `https://cad.onshape.com/api`.
+ * Either development or production.
  */
-const onshapeApiUrl = process.env.API_URL;
+const environment = process.env.NODE_ENV;
 
 /**
  * The absolute URL of the OAuth callback URL. This will be the `/oauthRedirect` endpoint
@@ -117,8 +117,7 @@ function isValidString(stringToTest) {
 // We will check the entire configuration and only throw one error (if invalid).
 const errors = [];
 
-if (port && !isValidString(port)) errors.push("PORT must have content");
-if (!isValidHttpUrl(onshapeApiUrl)) errors.push("API_URL is not a valid HTTP(S) URL");
+if (port && !isValidString(port)) errors.push("PORT must have valid content");
 if (!isValidHttpUrl(oauthCallbackUrl)) errors.push("OAUTH_CALLBACK_URL is not a valid HTTP(S) URL");
 if (!isValidString(oauthClientId)) errors.push("OAUTH_CLIENT_ID must have content");
 if (!isValidString(oauthClientSecret)) errors.push("OAUTH_CLIENT_SECRET must have content");
@@ -132,9 +131,18 @@ if (errors.length !== 0) {
     throw new Error("Invalid configuration: " + errors.join(", "));
 }
 
+function isProduction() {
+    return environment === "production";
+}
+
+function isDevelopment() {
+    return environment === "development";
+}
+
 module.exports = {
+    isProduction,
+    isDevelopment,
     port,
-    onshapeApiUrl,
     oauthCallbackUrl,
     oauthClientId,
     oauthClientSecret,

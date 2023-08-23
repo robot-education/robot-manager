@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A sample app to assist with competitive robot design.",
   "scripts": {
-    "start": "src/www.js"
+    "start": "node src/server.js"
   },
   "author": "Alex Kempen <alex.bookreader@gmail.com>",
   "license": "MIT",

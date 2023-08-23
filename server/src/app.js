@@ -11,7 +11,7 @@ const config = require('./config');
 
 const app = express();
 
-app.set('trust proxy', 1); // To allow to run correctly behind Heroku
+app.set('trust proxy', 1);
 
 app.use(session({
     secret: config.sessionSecret,
@@ -60,10 +60,10 @@ app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/
     return res.redirect(req.session.state.url);
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/grantDenied', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'denied.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'denied.html'));
 });
 
 /**

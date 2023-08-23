@@ -131,3 +131,4 @@ dist
 **/.env
 dist/
 https-cert/
+app.yaml

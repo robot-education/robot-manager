@@ -7,9 +7,9 @@ let { app } = require("./app");
 
 const port = config.port || 3000;
 
-const options = {
+const options = config.isDevelopment() ? {
     key: readFileSync("https-cert/key.pem"),
     cert: readFileSync("https-cert/cert.pem"),
-};
+} : {};
 
 createServer(options, app).listen(port, () => console.log("Listening on port " + port));
