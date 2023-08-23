@@ -1,9 +1,9 @@
-require("dotenv").config();
+// require("dotenv").config();
 
 /**
  * The port this application should run on. This may be `undefined`.
  */
-const port = process.env.PORT;
+const port = parseInt(process.env.PORT);
 
 /**
  * Either development or production.
@@ -117,7 +117,7 @@ function isValidString(stringToTest) {
 // We will check the entire configuration and only throw one error (if invalid).
 const errors = [];
 
-if (port && !isValidString(port)) errors.push("PORT must have valid content");
+// don't check port
 if (!isValidHttpUrl(oauthCallbackUrl)) errors.push("OAUTH_CALLBACK_URL is not a valid HTTP(S) URL");
 if (!isValidString(oauthClientId)) errors.push("OAUTH_CLIENT_ID must have content");
 if (!isValidString(oauthClientSecret)) errors.push("OAUTH_CLIENT_SECRET must have content");

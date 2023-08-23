@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node src/server.js"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "author": "Alex Kempen <alex.bookreader@gmail.com>",
   "license": "MIT",
   "private": true,
