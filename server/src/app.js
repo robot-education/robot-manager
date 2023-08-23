@@ -11,10 +11,6 @@ const config = require('./config');
 
 const app = express();
 
-// const bodyParser = require('body-parser');
-// must come after proxy?
-// app.use(bodyParser.json());
-
 app.set('trust proxy', 1); // To allow to run correctly behind Heroku
 
 app.use(session({
@@ -67,8 +63,7 @@ app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/grantDenied', (_, res) => {
-    // TODO: Add an actual grant denied page
-    res.sendFile(path.join(__dirname, 'public', 'grant-denied.html'));
+    res.sendFile(path.join(__dirname, 'public', 'denied.html'));
 });
 
 /**
@@ -92,7 +87,7 @@ function authenticationHandler(req, res, next) {
 app.use(authenticationHandler);
 
 app.get('/application', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 /**

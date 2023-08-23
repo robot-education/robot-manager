@@ -16,7 +16,7 @@ import {
 } from '@blueprintjs/core';
 
 import { AppNavbar } from './app_navbar';
-import { NonIdealStateOverride } from './components/non_ideal_state_override';
+import { NonIdealStateOverride } from '../components/non_ideal_state_override';
 import { makeElementPath, post } from './api';
 
 enum MenuState {
