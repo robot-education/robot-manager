@@ -37,10 +37,10 @@ export function PartStudioApp(): JSX.Element {
     };
     setMenuState(MenuState.EXECUTING);
     await execute();
-    if (menuState === MenuState.EXECUTING) {
+    if (menuState !== MenuState.CLOSED) {
       setMenuState(MenuState.FINISHED);
     }
-  }, [autoAssemble, assemblyName]);
+  }, [autoAssemble, assemblyName, menuState]);
 
   const openAssembly = (
     <Button
@@ -61,7 +61,7 @@ export function PartStudioApp(): JSX.Element {
       title="Generate assembly"
       loadingMessage="Generating assembly"
       successMessage="Successfully generated assembly"
-      successDescription="Remeber to fix a part in the assembly to lock it in place."
+      successDescription="Remember to fix a part in the assembly to lock it in place."
       additionalActions={openAssembly}
     />
   );

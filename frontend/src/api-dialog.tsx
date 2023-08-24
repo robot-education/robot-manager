@@ -36,7 +36,7 @@ export function ApiDialog(props: ApiDialogProps): JSX.Element {
 
   const body = (
     <DialogBody useOverflowScrollContainer={false}>
-      {menuState === MenuState.EXECUTING ? (
+      {menuState === MenuState.EXECUTING && (
         <NonIdealState
           icon={<Spinner intent="primary" />}
           title={props.loadingMessage}
@@ -49,7 +49,8 @@ export function ApiDialog(props: ApiDialogProps): JSX.Element {
             />
           }
         />
-      ) : (
+      )}
+      {menuState === MenuState.FINISHED && (
         <NonIdealStateOverride
           icon="tick"
           iconIntent="success"
@@ -63,19 +64,17 @@ export function ApiDialog(props: ApiDialogProps): JSX.Element {
   const footer = (
     <DialogFooter
       minimal={true}
-      actions={
-        menuState === MenuState.FINISHED && (
-          <>
-            {props.additionalActions}
-            <Button
-              text="Close"
-              intent="success"
-              icon="tick"
-              onClick={closeMenu}
-            />
-          </>
-        )
-      }
+      actions={menuState === MenuState.FINISHED && (
+        <>
+          {props.additionalActions}
+          <Button
+            text="Close"
+            intent="success"
+            icon="tick"
+            onClick={closeMenu}
+          />
+        </>
+      )}
     />
   );
 

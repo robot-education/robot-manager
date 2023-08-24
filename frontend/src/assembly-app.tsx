@@ -9,11 +9,11 @@ export function AssemblyApp(): JSX.Element {
     const [menuState, setMenuState] = React.useState(MenuState.CLOSED);
     const executeAutoAssembly = React.useCallback(async () => {
         setMenuState(MenuState.EXECUTING);
-        const result = await post("auto-assembly", getElementPath());
-        if (menuState === MenuState.EXECUTING) {
+        await post("auto-assembly", getElementPath());
+        if (menuState !== MenuState.CLOSED) {
             setMenuState(MenuState.FINISHED);
         }
-    }, []);
+    }, [menuState]);
 
     const executeDialog = (
         <ApiDialog
