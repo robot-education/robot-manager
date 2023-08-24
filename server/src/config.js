@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 
 /**
  * The port this application should run on. This may be `undefined`.

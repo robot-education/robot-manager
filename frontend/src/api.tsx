@@ -8,7 +8,7 @@ export async function post(
 ): Promise<any> {
     try {
         // @ts-ignore
-        const normalizedUrl = `https://localhost:3000/api/${apiPath}?` + new URLSearchParams(query ?? {});
+        const normalizedUrl = `/api/${apiPath}?` + new URLSearchParams(query ?? {});
         const result = await fetch(normalizedUrl, {
             method: "POST",
             mode: "cors",
