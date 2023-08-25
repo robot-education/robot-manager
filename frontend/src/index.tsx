@@ -1,8 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { App } from "./app";
+import { Root } from "./root";
+import { PartStudioApp } from "./part-studio-app";
+import { AssemblyApp } from "./assembly-app";
 import reportWebVitals from "./report-web-vitals";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "assembly",
+        element: <AssemblyApp />,
+      },
+      {
+        path: "partstudio",
+        element: <PartStudioApp />
+      },
+    ]
+  },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -10,7 +30,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );
 

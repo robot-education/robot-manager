@@ -8,26 +8,20 @@
             "problemMatcher": []
         },
         {
-            "label": "Build and launch server",
-            "command": "npm run build --prefix frontend && npm run start --prefix server",
-            "type": "shell",
-            "problemMatcher": []
-        },
-        {
-            "label": "build frontend",
+            "label": "Build frontend",
             "command": "npm run build --prefix frontend",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "label": "build and watch frontend",
-            "command": "npm run watch --prefix frontend",
+            "label": "Preview frontend",
+            "command": "npm run start --prefix frontend",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "label": "Preview frontend",
-            "command": "npm run start --prefix preview",
+            "label": "Deploy",
+            "command": "npm run build --prefix frontend && cd server && gcloud app deploy",
             "type": "shell",
             "problemMatcher": []
         }

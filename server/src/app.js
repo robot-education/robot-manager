@@ -85,7 +85,7 @@ function authenticationHandler(req, res, next) {
  */
 app.use(authenticationHandler);
 
-app.get('/application', (_, res) => {
+app.get(['/assembly', '/partstudio'], (_, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
