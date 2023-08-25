@@ -4,16 +4,15 @@ import * as Blueprint from "@blueprintjs/core";
 import { AppNavbar } from "./app-navbar";
 import { getElementPath, post } from "./api";
 import { ApiDialog, MenuState } from "./api-dialog";
+import { useState } from "react";
 
 export function AssemblyApp(): JSX.Element {
-    const [menuState, setMenuState] = React.useState(MenuState.CLOSED);
-    const executeAutoAssembly = React.useCallback(async () => {
+    const [menuState, setMenuState] = useState(MenuState.CLOSED);
+    const executeAutoAssembly = async () => {
         setMenuState(MenuState.EXECUTING);
         await post("auto-assembly", getElementPath());
-        if (menuState !== MenuState.CLOSED) {
-            setMenuState(MenuState.FINISHED);
-        }
-    }, [menuState]);
+        setMenuState(MenuState.FINISHED);
+    };
 
     const executeDialog = (
         <ApiDialog

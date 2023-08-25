@@ -8,14 +8,26 @@
             "problemMatcher": []
         },
         {
+            "label": "Build and launch server",
+            "command": "npm run build --prefix frontend && npm run start --prefix server",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
             "label": "build frontend",
             "command": "npm run build --prefix frontend",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "label": "Test frontend",
-            "command": "npm run start --prefix frontend",
+            "label": "build and watch frontend",
+            "command": "npm run watch --prefix frontend",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "Preview frontend",
+            "command": "npm run start --prefix preview",
             "type": "shell",
             "problemMatcher": []
         }

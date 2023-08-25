@@ -32,7 +32,7 @@ interface ApiDialogProps {
  */
 export function ApiDialog(props: ApiDialogProps): JSX.Element {
   const { menuState, setMenuState } = props;
-  const closeMenu = () => setMenuState(MenuState.CLOSED);
+  const closeMenu = () => { setMenuState(MenuState.CLOSED); };
 
   const body = (
     <DialogBody useOverflowScrollContainer={false}>

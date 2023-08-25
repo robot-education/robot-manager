@@ -24,8 +24,10 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
-    "serve": "vite preview"
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "check": "tsc",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [

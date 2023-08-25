@@ -18,29 +18,24 @@ export function PartStudioApp(): JSX.Element {
   const [autoAssemble, setAutoAssemble] = useState(true);
   const [assemblyName, setAssemblyName] = useState("Assembly");
   const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>();
-  const [menuState, setMenuState] = React.useState(MenuState.CLOSED);
+  const [menuState, setMenuState] = useState(MenuState.CLOSED);
 
-  const executeGenerateAssembly = useCallback(async () => {
-    const execute = async () => {
-      const elementPath = getElementPath();
-      const result = await post("generate-assembly", {
-        ...elementPath,
-        name: assemblyName,
-      });
-      const assemblyPath = { ...elementPath, elementId: result.elementId };
-      setAssemblyUrl(
-        `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`,
-      );
-      if (autoAssemble) {
-        await post("auto-assembly", assemblyPath);
-      }
-    };
+  const executeGenerateAssembly = async () => {
     setMenuState(MenuState.EXECUTING);
-    await execute();
-    if (menuState !== MenuState.CLOSED) {
-      setMenuState(MenuState.FINISHED);
+    const elementPath = getElementPath();
+    const result = await post("generate-assembly", {
+      ...elementPath,
+      name: assemblyName,
+    });
+    const assemblyPath = { ...elementPath, elementId: result.elementId };
+    setAssemblyUrl(
+      `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`,
+    );
+    if (autoAssemble) {
+      await post("auto-assembly", assemblyPath);
     }
-  }, [autoAssemble, assemblyName, menuState]);
+    setMenuState(MenuState.FINISHED);
+  };
 
   const openAssembly = (
     <Button

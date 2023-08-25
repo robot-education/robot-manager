@@ -4,20 +4,21 @@
 export async function post(
     apiPath: string,
     body: object = {},
-    query: Record<string, string | boolean> = {},
+    query: Record<string, string> = {},
 ): Promise<any> {
     try {
-        // @ts-ignore
-        const normalizedUrl = `/api/${apiPath}?` + new URLSearchParams(query ?? {});
-        const result = await fetch(normalizedUrl, {
+        let normalizedUrl = `/api/${apiPath}`;
+        if (query) {
+            normalizedUrl += `?${new URLSearchParams(query)}`;
+        }
+        return fetch(normalizedUrl, {
             method: "POST",
             mode: "cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
-        });
-        return await result.json();
+        }).then(response => response.json());
     } catch (error) {
-        return { error };
+        return Promise.reject(error);
     }
 }
 
