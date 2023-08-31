@@ -1,13 +1,13 @@
-const path = require('path');
-const uuid = require('uuid');
-const express = require('express');
-const session = require('express-session');
-const proxy = require('express-http-proxy');
+import path from 'path';
+import uuid from 'uuid';
+import express from 'express';
+import session from 'express-session';
+import proxy from 'express-http-proxy';
 
-const passport = require('passport');
-const OnshapeStrategy = require('passport-onshape');
+import passport from 'passport';
+import OnshapeStrategy from 'passport-onshape';
 
-const config = require('./config');
+import config from './config';
 
 const app = express();
 app.set('trust proxy', true);
@@ -98,6 +98,5 @@ app.use('/api', proxy(config.backendUrl, {
         return options;
     },
 }));
-
 
 module.exports = { app };

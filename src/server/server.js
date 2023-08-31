@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-let { app } = require("./app");
-let config = require("./config");
+import { app } from "./app";
+import config from "./config";
 const port = config.port || 3000;
-const handler = () => console.log("Listening on part " + port)
 
 if (config.isDevelopment()) {
     let { createServer } = require("https");
@@ -11,9 +10,9 @@ if (config.isDevelopment()) {
         key: readFileSync("https-cert/key.pem"),
         cert: readFileSync("https-cert/cert.pem"),
     };
-    createServer(options, app).listen(port, handler);
-}
-else {
-    let { createServer } = require("http");
-    createServer({}, app).listen(port, handler);
+    const handler = () => console.log("Listening on part " + port)
+    const server = createServer(options, app).listen(port, handler);
+    ViteExpress.bind(app, server);
+} else {
+    ViteExpress.listen(app, port);
 }
