@@ -2,28 +2,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Launch server",
-            "command": "npm run start --prefix server",
+            "label": "Build",
+            "command": "npm run build",
             "type": "shell",
             "problemMatcher": []
         },
         {
-            "label": "Build frontend",
-            "command": "npm run build --prefix frontend",
-            "type": "shell",
-            "problemMatcher": []
-        },
-        {
-            "label": "Preview frontend",
-            "command": "npm run start --prefix frontend",
-            "type": "shell",
-            "problemMatcher": []
-        },
-        {
-            "label": "Deploy",
-            "command": "npm run build --prefix frontend && cd server && gcloud app deploy",
+            "label": "Local development server",
+            "command": "npm run dev",
             "type": "shell",
             "problemMatcher": []
         }
+        // {
+        //     "label": "Deploy",
+        //     "command": "npm run build --prefix frontend && cd server && gcloud app deploy",
+        //     "type": "shell",
+        //     "problemMatcher": []
+        // }
     ]
 }

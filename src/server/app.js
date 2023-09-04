@@ -1,16 +1,21 @@
-import path from 'path';
-import uuid from 'uuid';
-import express from 'express';
-import session from 'express-session';
-import proxy from 'express-http-proxy';
+const uuid = require('uuid');
+const express = require('express');
+const session = require('express-session');
+const proxy = require('express-http-proxy');
 
-import passport from 'passport';
-import OnshapeStrategy from 'passport-onshape';
+const passport = require('passport');
+const OnshapeStrategy = require('passport-onshape');
 
-import config from './config';
+const config = require('./config');
+
+// let ViteExpress = require("vite-express");
+// app.use(ViteExpress.static());
+
 
 const app = express();
 app.set('trust proxy', true);
+
+console.log("New session?");
 
 app.use(session({
     secret: config.sessionSecret,
@@ -19,12 +24,14 @@ app.use(session({
     cookie: {
         name: 'robot-manager',
         sameSite: 'none',
-        secure: true,
         httpOnly: true,
-        path: '/',
+        secure: true,
+        path: "/",
         maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
 }));
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,9 +53,32 @@ passport.use(new OnshapeStrategy({
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
+
+/**
+ * An authentication handler which automatically routes requests through /oauthSignin.
+ */
+function authenticationHandler(req, res, next) {
+    console.log("Checking auth info");
+    if (req.isAuthenticated()) {
+        console.log("Authenticated!");
+        return next();
+    }
+    console.log("Nope");
+    req.session.state = { url: req.url };
+    req.session.save();
+    return res.status(401).redirect('/oauthSignin');
+}
+
+// Authenticate selected routes
+app.use(["/assembly", "/partstudio"], authenticationHandler);
+
 app.get('/oauthSignin', (req, res) => {
-    req.session.state = req.session.state ?? {};
-    req.session.state.redirectUri = req.query.redirectOnshapeUri;
+    console.log("Signin ouath time");
+    const state = req.session.state ?? {};
+    state.redirectUri = req.query.redirectOnshapeUri;
+    req.session.state = state;
+    req.session.save();
+    console.log(req.session.state);
     return passport.authenticate('onshape', { state: uuid.v4(req.session.state) })(req, res);
 });
 
@@ -59,38 +89,22 @@ app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/
     return res.redirect(req.session.state.url);
 });
 
-app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('/grantDenied', (_, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'denied.html'));
-});
 
-/**
- * An authentication handler which automatically routes requests through /oauthSignin.
- * Information about the query is automatically saved to state.
- */
-function authenticationHandler(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    req.session.state = { url: req.url };
-    return res.status(401).redirect('/oauthSignin');
-}
+// app.get('/grantDenied', (_, res) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'denied.html'));
+// });
 
+// if (config.isProduction) {
+//     app.use(express.static(path.join(process.cwd(), 'dist')));
+
+//     app.get((_, res) => {
+//         res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
+//     });
+// }
 
 /**
- * Register the auth handler for all types of requests.
- * Note this registration must occur between registering oauth sign in and oauth redirect in order
- * to prevent issues with infinite redirects/the oauth gateway.
- */
-app.use(authenticationHandler);
-
-app.get(['/assembly', '/partstudio'], (_, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-/**
- * Redirects /api calls to the python backend.
+ * Redirect /api calls to the backend.
  */
 app.use('/api', proxy(config.backendUrl, {
     proxyReqOptDecorator: (options, req) => {

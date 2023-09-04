@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./root";
 import { PartStudioApp } from "./part-studio-app";
 import { AssemblyApp } from "./assembly-app";
-import reportWebVitals from "./report-web-vitals";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +32,3 @@ root.render(
     <RouterProvider router={router} />
   </React.StrictMode>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

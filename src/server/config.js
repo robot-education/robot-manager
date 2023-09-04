@@ -1,15 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
+require("dotenv").config();
 
 /**
  * The port this application should run on. This may be `undefined`.
  */
-const port = parseInt(process.env.PORT);
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-/**
- * Either development or production.
- */
-const environment = process.env.NODE_ENV;
+const isProduction = process.env.NODE_ENV === "production";
 
 /**
  * The absolute URL of the OAuth callback URL. This will be the `/oauthRedirect` endpoint
@@ -132,17 +128,9 @@ if (errors.length !== 0) {
     throw new Error("Invalid configuration: " + errors.join(", "));
 }
 
-function isProduction() {
-    return environment === "production";
-}
-
-function isDevelopment() {
-    return environment === "development";
-}
 
 module.exports = {
     isProduction,
-    isDevelopment,
     port,
     oauthCallbackUrl,
     oauthClientId,
@@ -150,4 +138,4 @@ module.exports = {
     oauthUrl,
     backendUrl,
     sessionSecret,
-}
+};
