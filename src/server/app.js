@@ -6,21 +6,27 @@ const proxy = require('express-http-proxy');
 const passport = require('passport');
 const OnshapeStrategy = require('passport-onshape');
 
+const RedisStore = require("connect-redis").default;
+const redis = require("redis");
+
 const config = require('./config');
-
-// let ViteExpress = require("vite-express");
-// app.use(ViteExpress.static());
-
 
 const app = express();
 app.set('trust proxy', true);
 
-console.log("New session?");
+let redisClient = redis.createClient();
+redisClient.connect().catch(console.error);
+
+let redisStore = new RedisStore({
+    client: redisClient,
+    prefix: "robot-manager:"
+});
 
 app.use(session({
+    store: redisStore,
     secret: config.sessionSecret,
-    saveUninitialized: false,
     resave: false,
+    saveUninitialized: false,
     cookie: {
         name: 'robot-manager',
         sameSite: 'none',
@@ -30,8 +36,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
 }));
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,35 +62,27 @@ passport.deserializeUser((obj, done) => done(null, obj));
  * An authentication handler which automatically routes requests through /oauthSignin.
  */
 function authenticationHandler(req, res, next) {
-    console.log("Checking auth info");
     if (req.isAuthenticated()) {
-        console.log("Authenticated!");
         return next();
     }
-    console.log("Nope");
     req.session.state = { url: req.url };
-    req.session.save();
     return res.status(401).redirect('/oauthSignin');
 }
 
 // Authenticate selected routes
-app.use(["/assembly", "/partstudio"], authenticationHandler);
+app.get(["/assembly", "/partstudio"], authenticationHandler);
 
 app.get('/oauthSignin', (req, res) => {
-    console.log("Signin ouath time");
     const state = req.session.state ?? {};
     state.redirectUri = req.query.redirectOnshapeUri;
     req.session.state = state;
-    req.session.save();
-    console.log(req.session.state);
     return passport.authenticate('onshape', { state: uuid.v4(req.session.state) })(req, res);
 });
 
 
 app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/grantDenied' }), (req, res) => {
-    const redirectUri = req.session.state.redirectUri;
-    if (redirectUri) { return res.redirect(redirectUri); }
-    return res.redirect(req.session.state.url);
+    const state = req.session.state;
+    return res.redirect(state.redirectUri ?? state.url);
 });
 
 
