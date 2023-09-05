@@ -16,13 +16,11 @@
         "resave",
         "TOKENTIMEOUT"
     ],
-    "cSpell.flagWords": [
-        "coincentric",
-        "expresion"
-    ],
+    "cSpell.flagWords": ["coincentric", "expresion"],
     "files.associations": {
         "*.json": "jsonc"
     },
     "files.eol": "\n",
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 4,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

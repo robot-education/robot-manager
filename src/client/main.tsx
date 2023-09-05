@@ -7,28 +7,28 @@ import { PartStudioApp } from "./part-studio-app";
 import { AssemblyApp } from "./assembly-app";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    children: [
-      {
-        path: "assembly",
-        element: <AssemblyApp />,
-      },
-      {
-        path: "partstudio",
-        element: <PartStudioApp />
-      },
-    ]
-  },
+    {
+        path: "/",
+        element: <Root />,
+        children: [
+            {
+                path: "assembly",
+                element: <AssemblyApp />,
+            },
+            {
+                path: "partstudio",
+                element: <PartStudioApp />,
+            },
+        ],
+    },
 ]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+    document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>
 );

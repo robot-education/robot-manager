@@ -4,7 +4,7 @@
 export async function post(
     apiPath: string,
     body: object = {},
-    query: Record<string, string> = {},
+    query: Record<string, string> = {}
 ): Promise<any> {
     try {
         let normalizedUrl = `/api/${apiPath}`;
@@ -16,7 +16,7 @@ export async function post(
             mode: "cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
-        }).then(response => response.json());
+        }).then((response) => response.json());
     } catch (error) {
         return Promise.reject(error);
     }
