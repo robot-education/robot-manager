@@ -29,7 +29,7 @@ export function PartStudioApp(): JSX.Element {
         });
         const assemblyPath = { ...elementPath, elementId: result.elementId };
         setAssemblyUrl(
-            `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`
+            `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`,
         );
         if (autoAssemble) {
             await post("auto-assembly", assemblyPath);

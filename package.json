@@ -8,6 +8,9 @@
         "build": "vite build",
         "prepare": "husky install"
     },
+    "prettier": {
+        "tabWidth": 4
+    },
     "lint-staged": {
         "src/**/*.{html,js,ts,scss}": [
             "prettier --write"

@@ -36,7 +36,7 @@ app.use(
             path: "/",
             maxAge: 1000 * 60 * 60 * 24, // 1 day
         },
-    })
+    }),
 );
 
 app.use(passport.initialize());
@@ -56,8 +56,8 @@ passport.use(
             profile.accessToken = accessToken;
             profile.refreshToken = refreshToken;
             return done(null, profile);
-        }
-    )
+        },
+    ),
 );
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
@@ -91,7 +91,7 @@ app.get(
     (req, res) => {
         const state = req.session.state;
         return res.redirect(state.redirectUri ?? state.url);
-    }
+    },
 );
 
 // app.get('/grantDenied', (_, res) => {
@@ -116,7 +116,7 @@ app.use(
             options.headers["Authentication"] = "Basic " + req.user.accessToken;
             return options;
         },
-    })
+    }),
 );
 
 module.exports = { app };

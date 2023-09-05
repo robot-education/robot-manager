@@ -10,6 +10,6 @@ import { Outlet } from "react-router-dom";
 import { FocusStyleManager } from "@blueprintjs/core";
 
 export function Root() {
-  FocusStyleManager.onlyShowFocusOnTabs();
-  return <Outlet />;
+    FocusStyleManager.onlyShowFocusOnTabs();
+    return <Outlet />;
 }

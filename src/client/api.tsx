@@ -4,7 +4,7 @@
 export async function post(
     apiPath: string,
     body: object = {},
-    query: Record<string, string> = {}
+    query: Record<string, string> = {},
 ): Promise<any> {
     try {
         let normalizedUrl = `/api/${apiPath}`;
