@@ -17,17 +17,16 @@
     "runArgs": [
         "--hostname=${localEnv:HOSTNAME}"
     ],
-    // Use "postCreateCommand" to run commands after the container is created.
     // "postCreateCommand": "npm install",
-    // Configure tool-specific properties.
     "customizations": {
         "vscode": {
             "extensions": [
-                "streetsidesoftware.code-spell-checker",
-                "redhat.vscode-yaml",
-                "yzhang.markdown-all-in-one",
-                "GoogleCloudTools.cloudcode"
-            ]
+				"streetsidesoftware.code-spell-checker",
+				"redhat.vscode-yaml",
+				"yzhang.markdown-all-in-one",
+				"GoogleCloudTools.cloudcode",
+				"esbenp.prettier-vscode"
+			]
         }
     },
     "containerEnv": {

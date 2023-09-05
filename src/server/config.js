@@ -45,19 +45,19 @@ const backendUrl = process.env.BACKEND_URL;
  * Checks if the given string is a URL. A string considered a URL if it can be parsed
  * as a URL (based on the WHATWG definition).
  * If `protocols` is provided, this will be taken into account in the validation.
- * 
+ *
  * For example:
- * 
+ *
  * `isValidUrl("https://example.com", [ "http:", "https:" ])` would evaluate to `true`
- * 
+ *
  * `isValidUrl("http://sub.example.com", [ "redis:" ])` would evaluate to `false`
- * 
+ *
  * `isValidUrl("example.com")` would evaluate to `false`
- * 
+ *
  * @param {string} stringToTest The string to check for validity.
  * @param {string|string[]} protocols The protocol(s) to include in the validity
  *      check. May be excluded, in which case it will not be considered in the check.
- * 
+ *
  * @returns {boolean} `true` if the given string is a valid URL, and has one of the
  *      given protocols (if provided); or `false` otherwise.
  */
@@ -83,16 +83,16 @@ function isValidUrl(stringToTest, protocols) {
 /**
  * Checks if the given string is an HTTP or HTTPS URL. A string is considered if it can
  * be parsed as a URL (based on the WHATWG definition).
- * 
+ *
  * For example:
- * 
+ *
  * `isValidHttpUrl("http://example.com")` would evaluate to `true`
- * 
+ *
  * `isValidHttpUrl("ftp://user:pass@ftp.example.com/public/doc.txt)` would evaluate
  * to `false`
- * 
+ *
  * `isValidHttpUrl("example.com")` would evaluate to `false`
- * 
+ *
  * @param {string} stringToTest The string to check for validity.
  */
 function isValidHttpUrl(stringToTest) {
@@ -102,12 +102,12 @@ function isValidHttpUrl(stringToTest) {
 /**
  * Checks if the given string has content, i.e. is not null and does not contain solely
  * whitespace characters.
- * 
+ *
  * @param {string} stringToTest The string to check for validity.
  */
 function isValidString(stringToTest) {
     if (!stringToTest) return false;
-    if (!(stringToTest.trim())) return false;
+    if (!stringToTest.trim()) return false;
     return true;
 }
 
@@ -115,19 +115,24 @@ function isValidString(stringToTest) {
 const errors = [];
 
 // don't check port
-if (!isValidHttpUrl(oauthCallbackUrl)) errors.push("OAUTH_CALLBACK_URL is not a valid HTTP(S) URL");
-if (!isValidString(oauthClientId)) errors.push("OAUTH_CLIENT_ID must have content");
-if (!isValidString(oauthClientSecret)) errors.push("OAUTH_CLIENT_SECRET must have content");
-if (!isValidHttpUrl(oauthUrl)) errors.push("OAUTH_URL is not a valid HTTP(S) URL");
-if (!isValidHttpUrl(backendUrl)) errors.push("BACKEND_URL is not a valid HTTP(S) URL");
-if (!isValidString(sessionSecret)) errors.push("SESSION_SECRET must have content");
+if (!isValidHttpUrl(oauthCallbackUrl))
+    errors.push("OAUTH_CALLBACK_URL is not a valid HTTP(S) URL");
+if (!isValidString(oauthClientId))
+    errors.push("OAUTH_CLIENT_ID must have content");
+if (!isValidString(oauthClientSecret))
+    errors.push("OAUTH_CLIENT_SECRET must have content");
+if (!isValidHttpUrl(oauthUrl))
+    errors.push("OAUTH_URL is not a valid HTTP(S) URL");
+if (!isValidHttpUrl(backendUrl))
+    errors.push("BACKEND_URL is not a valid HTTP(S) URL");
+if (!isValidString(sessionSecret))
+    errors.push("SESSION_SECRET must have content");
 // if (!isValidHttpUrl(webhookCallbackRootUrl)) errors.push("WEBHOOK_CALLBACK_ROOT_URL is not a valid HTTP(S) URL");
 
 // Halt execution if the app isn"t correctly configured.
 if (errors.length !== 0) {
     throw new Error("Invalid configuration: " + errors.join(", "));
 }
-
 
 module.exports = {
     isProduction,
