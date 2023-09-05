@@ -6,21 +6,26 @@ const proxy = require("express-http-proxy");
 const passport = require("passport");
 const OnshapeStrategy = require("passport-onshape");
 
-const RedisStore = require("connect-redis").default;
-const redis = require("redis");
-
 const config = require("./config");
 
 const app = express();
 app.set("trust proxy", true);
 
-let redisClient = redis.createClient();
-redisClient.connect().catch(console.error);
+let store;
+if (config.isProduction) {
+    store = new session.MemoryStore();
+} else {
+    const redis = require("redis");
+    const RedisStore = require("connect-redis").default;
 
-let redisStore = new RedisStore({
-    client: redisClient,
-    prefix: "robot-manager:",
-});
+    let redisClient = redis.createClient();
+    redisClient.connect().catch(console.error);
+
+    store = new RedisStore({
+        client: redisClient,
+        prefix: "robot-manager:",
+    });
+}
 
 app.use(
     session({
@@ -93,18 +98,6 @@ app.get(
         return res.redirect(state.redirectUri ?? state.url);
     },
 );
-
-// app.get('/grantDenied', (_, res) => {
-//     res.sendFile(path.join(__dirname, 'dist', 'denied.html'));
-// });
-
-// if (config.isProduction) {
-//     app.use(express.static(path.join(process.cwd(), 'dist')));
-
-//     app.get((_, res) => {
-//         res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
-//     });
-// }
 
 /**
  * Redirect /api calls to the backend.
