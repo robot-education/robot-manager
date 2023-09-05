@@ -16,10 +16,9 @@ async function startServer() {
             key: readFileSync("https-cert/key.pem"),
             cert: readFileSync("https-cert/cert.pem"),
         };
-        const handler = () => console.log(`Listening on port ${config.port}\nStarting the vite server`);
-        server = createServer(options, app).listen(config.port, handler);
+        server = createServer(options, app).listen(config.port);
         await ViteExpress.bind(app, server);
-        console.log("Server started");
+        console.log(`Listening on port ${config.port}`);
     }
 }
 
