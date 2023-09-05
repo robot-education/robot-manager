@@ -2,16 +2,34 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
-            "command": "npm run build",
-            "type": "shell",
+            "label": "Production build",
+            "type": "npm",
+            "script": "build",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Development server",
+            "type": "npm",
+            "script": "dev",
             "problemMatcher": []
         },
         {
-            "label": "Local development server",
-            "command": "npm run dev",
+            "label": "Development redis instance",
+            "command": "redis-server",
             "type": "shell",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
         }
         // {
         //     "label": "Deploy",
