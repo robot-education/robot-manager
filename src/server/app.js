@@ -6,24 +6,12 @@ const proxy = require('express-http-proxy');
 const passport = require('passport');
 const OnshapeStrategy = require('passport-onshape');
 
-const RedisStore = require("connect-redis").default;
-const redis = require("redis");
-
 const config = require('./config');
 
 const app = express();
 app.set('trust proxy', true);
 
-let redisClient = redis.createClient();
-redisClient.connect().catch(console.error);
-
-let redisStore = new RedisStore({
-    client: redisClient,
-    prefix: "robot-manager:"
-});
-
 app.use(session({
-    store: redisStore,
     secret: config.sessionSecret,
     resave: false,
     saveUninitialized: false,
@@ -57,7 +45,6 @@ passport.use(new OnshapeStrategy({
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-
 /**
  * An authentication handler which automatically routes requests through /oauthSignin.
  */
@@ -84,8 +71,6 @@ app.get('/oauthRedirect', passport.authenticate('onshape', { failureRedirect: '/
     const state = req.session.state;
     return res.redirect(state.redirectUri ?? state.url);
 });
-
-
 
 // app.get('/grantDenied', (_, res) => {
 //     res.sendFile(path.join(__dirname, 'dist', 'denied.html'));

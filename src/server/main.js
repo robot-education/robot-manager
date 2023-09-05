@@ -3,9 +3,7 @@ let { app } = require("./app");
 let ViteExpress = require("vite-express");
 
 async function startServer() {
-    ViteExpress.config({
-        mode: config.isProduction ? "production" : "development"
-    });
+    ViteExpress.config({ mode: config.isProduction ? "production" : "development" });
 
     if (config.isProduction) {
         ViteExpress.listen(app, config.port);
@@ -13,6 +11,7 @@ async function startServer() {
     else {
         let { createServer } = require("https");
         let { readFileSync } = require("fs");
+
         const options = {
             key: readFileSync("https-cert/key.pem"),
             cert: readFileSync("https-cert/cert.pem"),
