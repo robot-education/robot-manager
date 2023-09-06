@@ -5,6 +5,7 @@ let ViteExpress = require("vite-express");
 async function startServer() {
     ViteExpress.config({
         mode: config.isProduction ? "production" : "development",
+        ignorePaths: (path) => path === "/api",
     });
 
     if (config.isProduction) {
@@ -17,9 +18,9 @@ async function startServer() {
             key: readFileSync("https-cert/key.pem"),
             cert: readFileSync("https-cert/cert.pem"),
         };
-        server = createServer(options, app).listen(config.port);
+        const server = createServer(options, app).listen(config.port, () => {});
         await ViteExpress.bind(app, server);
-        console.log(`Listening on port ${config.port}`);
+        console.log(`Server ready on port ${config.port}`);
     }
 }
 

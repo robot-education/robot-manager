@@ -16,21 +16,28 @@
             "type": "npm",
             "script": "dev",
             "problemMatcher": []
-        },
-        {
-            "label": "Development redis instance",
-            "command": "redis-server",
-            "type": "shell",
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "focus": false,
-                "panel": "dedicated",
-                "showReuseMessage": true,
-                "clear": true
-            }
+            // "dependsOrder": "sequence",
+            // "dependsOn": ["Development redis server"]
         }
+        // {
+        //     "label": "Development redis server",
+        //     "type": "shell",
+        //     "command": "redis-server",
+        //     "isBackground": true,
+        //     "problemMatcher": {
+        //         "base": "$tsc-watch",
+        //         "background": {
+        //             "activeOnStart": true,
+        //             "beginsPattern": ".*",
+        //             "endsPattern": "^.*Ready to accept connections tcp"
+        //         }
+        //     },
+        //     "presentation": {
+        //         "reveal": "silent",
+        //         "focus": false,
+        //         "group": "dev server"
+        //     }
+        // },
         // {
         //     "label": "Deploy",
         //     "command": "npm run build --prefix frontend && cd server && gcloud app deploy",

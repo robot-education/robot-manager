@@ -11,6 +11,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "./app.scss";
 import { PartStudioApp } from "./part-studio-app";
 import { AssemblyApp } from "./assembly-app";
+import { GrantDenied } from "./grant-denied";
 
 /**
  * The root component.
@@ -33,15 +34,17 @@ const router = createBrowserRouter([
                 path: "partstudio",
                 element: <PartStudioApp />,
             },
+            {
+                path: "grantdenied",
+                element: <GrantDenied />,
+            },
         ],
     },
 ]);
 
-const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement,
-);
+const app = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
-root.render(
+app.render(
     <React.StrictMode>
         <RouterProvider router={router} />
     </React.StrictMode>,

@@ -13,32 +13,23 @@ app.set("trust proxy", true);
 
 let store;
 if (config.isProduction) {
+    // TODO: use gcp firebase in production
     store = new session.MemoryStore();
 } else {
-    const redis = require("redis");
-    const RedisStore = require("connect-redis").default;
-
-    let redisClient = redis.createClient();
-    redisClient.connect().catch(console.error);
-
-    store = new RedisStore({
-        client: redisClient,
-        prefix: "robot-manager:",
-    });
+    store = new session.MemoryStore();
 }
 
 app.use(
     session({
-        store: redisStore,
+        store,
+        name: "robot-manager",
         secret: config.sessionSecret,
         resave: false,
         saveUninitialized: false,
         cookie: {
-            name: "robot-manager",
             sameSite: "none",
             httpOnly: true,
             secure: true,
-            path: "/",
             maxAge: 1000 * 60 * 60 * 24, // 1 day
         },
     }),
@@ -46,7 +37,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(
     new OnshapeStrategy(
         {
@@ -67,21 +57,7 @@ passport.use(
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-/**
- * An authentication handler which automatically routes requests through /oauthSignin.
- */
-function authenticationHandler(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    req.session.state = { url: req.url };
-    return res.status(401).redirect("/oauthSignin");
-}
-
-// Authenticate selected routes
-app.get(["/assembly", "/partstudio"], authenticationHandler);
-
-app.get("/oauthSignin", (req, res) => {
+app.use("/signin", (req, res) => {
     const state = req.session.state ?? {};
     state.redirectUri = req.query.redirectOnshapeUri;
     req.session.state = state;
@@ -90,14 +66,32 @@ app.get("/oauthSignin", (req, res) => {
     })(req, res);
 });
 
-app.get(
-    "/oauthRedirect",
-    passport.authenticate("onshape", { failureRedirect: "/grantDenied" }),
+app.use(
+    "/redirect",
+    passport.authenticate("onshape", { failureRedirect: "/grantdenied" }),
     (req, res) => {
         const state = req.session.state;
-        return res.redirect(state.redirectUri ?? state.url);
+        // state should always exist, but fallback to onshape.com if it doesn't
+        let url = state
+            ? state.redirectUri ?? state.url
+            : "https://cad.onshape.com";
+        return res.redirect(url);
     },
 );
+
+/**
+ * An authentication handler which automatically routes requests through /signin.
+ */
+function checkAuthentication(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.session.state = { url: req.url };
+    return res.status(401).redirect("/signin");
+}
+
+// Authenticate selected routes
+app.get(["/assembly", "/partstudio"], checkAuthentication);
 
 /**
  * Redirect /api calls to the backend.
