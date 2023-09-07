@@ -26,10 +26,10 @@
         "tabWidth": 4
     },
     "lint-staged": {
-        "src/**/*.{html,js,ts,scss}": [
+        "{client,server}/**/*.{html,js,ts,scss}": [
             "prettier --write"
         ],
-        "src/**/*.ts": [
+        "{client,server}/**/*.ts": [
             "eslint --fix"
         ]
     },
