@@ -15,5 +15,5 @@
         "isolatedModules": true,
         "noEmit": true
     },
-    "include": ["client/", "server/", "vite.config.ts", "dist"]
+    "include": ["client/", "server/", "vite.config.ts"]
 }
