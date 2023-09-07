@@ -1,10 +1,9 @@
-import * as React from "react";
-import * as Blueprint from "@blueprintjs/core";
+import { useState } from "react";
+import { Card, H4, Button } from "@blueprintjs/core";
 
 import { AppNavbar } from "./app-navbar";
 import { getElementPath, post } from "./api";
 import { ApiDialog, MenuState } from "./api-dialog";
-import { useState } from "react";
 
 export function AssemblyApp(): JSX.Element {
     const [menuState, setMenuState] = useState(MenuState.CLOSED);
@@ -27,20 +26,21 @@ export function AssemblyApp(): JSX.Element {
     return (
         <>
             <AppNavbar />
-            <Blueprint.Card>
-                <Blueprint.H4>Execute auto assembly</Blueprint.H4>
+            <Card>
+                <H4>Execute auto assembly</H4>
                 <p>
-                    Execute the auto assembly script on parts in the current assembly.
+                    Execute the auto assembly script on parts in the current
+                    assembly.
                 </p>
                 {/* <Checkbox label='Resolve assembly mirror' /> */}
-                <Blueprint.Button
+                <Button
                     text="Execute"
                     intent="primary"
                     type="submit"
                     rightIcon="arrow-right"
                     onClick={executeAutoAssembly}
                 />
-            </Blueprint.Card>
+            </Card>
             {executeDialog}
         </>
     );

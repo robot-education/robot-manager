@@ -127,8 +127,8 @@ dist
 .pnp.*
 
 # Additional files
-.DS_Store
-**/.env
+.env
+app.yaml
 dist/
 https-cert/
-app.yaml
+dump.rdb

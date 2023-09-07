@@ -10,21 +10,19 @@
     },
     // Use "forwardPorts" to make a list of ports inside the container available locally.
     "forwardPorts": [
-        3000
+        3000, // default port
+        24678 // vite hmr server
     ],
-    "runArgs": [
-        "--hostname=${localEnv:HOSTNAME}"
-    ],
-    // Use "postCreateCommand" to run commands after the container is created.
+    "runArgs": ["--hostname=${localEnv:HOSTNAME}"],
     // "postCreateCommand": "npm install",
-    // Configure tool-specific properties.
     "customizations": {
         "vscode": {
             "extensions": [
                 "streetsidesoftware.code-spell-checker",
                 "redhat.vscode-yaml",
                 "yzhang.markdown-all-in-one",
-                "GoogleCloudTools.cloudcode"
+                "GoogleCloudTools.cloudcode",
+                "esbenp.prettier-vscode"
             ]
         }
     },

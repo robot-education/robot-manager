@@ -2,28 +2,47 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Launch server",
-            "command": "npm run start --prefix server",
-            "type": "shell",
-            "problemMatcher": []
+            "label": "Production build",
+            "type": "npm",
+            "script": "build",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
-            "label": "Build frontend",
-            "command": "npm run build --prefix frontend",
-            "type": "shell",
+            "label": "Development server",
+            "type": "npm",
+            "script": "dev",
             "problemMatcher": []
-        },
-        {
-            "label": "Preview frontend",
-            "command": "npm run start --prefix frontend",
-            "type": "shell",
-            "problemMatcher": []
-        },
-        {
-            "label": "Deploy",
-            "command": "npm run build --prefix frontend && cd server && gcloud app deploy",
-            "type": "shell",
-            "problemMatcher": []
+            // "dependsOrder": "sequence",
+            // "dependsOn": ["Development redis server"]
         }
+        // {
+        //     "label": "Development redis server",
+        //     "type": "shell",
+        //     "command": "redis-server",
+        //     "isBackground": true,
+        //     "problemMatcher": {
+        //         "base": "$tsc-watch",
+        //         "background": {
+        //             "activeOnStart": true,
+        //             "beginsPattern": ".*",
+        //             "endsPattern": "^.*Ready to accept connections tcp"
+        //         }
+        //     },
+        //     "presentation": {
+        //         "reveal": "silent",
+        //         "focus": false,
+        //         "group": "dev server"
+        //     }
+        // },
+        // {
+        //     "label": "Deploy",
+        //     "command": "npm run build --prefix frontend && cd server && gcloud app deploy",
+        //     "type": "shell",
+        //     "problemMatcher": []
+        // }
     ]
 }

@@ -12,16 +12,14 @@
     "cSpell.words": [
         "blueprintjs",
         "nocheck",
-        "orize",
         "resave",
+        "signin",
         "TOKENTIMEOUT"
     ],
-    "cSpell.flagWords": [
-        "coincentric",
-        "expresion"
-    ],
+    "cSpell.flagWords": ["coincentric", "expresion"],
     "files.associations": {
         "*.json": "jsonc"
     },
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -5,10 +5,16 @@
 #
 # For more information, run:
 #   $ gcloud topic gcloudignore
+
+#!include:.gitignore
+!dist/
+
 .gcloudignore
 .git
 .gitignore
 
-# Node.js dependencies:
-node_modules/
-.env
+client/
+.husky/
+.devcontainer/
+.vscode/
+
