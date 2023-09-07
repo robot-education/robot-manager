@@ -7,7 +7,7 @@ import svgrPlugin from "vite-plugin-svgr";
 export default defineConfig({
     plugins: [react(), svgrPlugin()],
     build: {
-        outDir: "src/server/dist",
+        outDir: "/dist",
         emptyOutDir: true,
         copyPublicDir: true,
     },
@@ -16,6 +16,7 @@ export default defineConfig({
         hmr: {
             host: "localhost",
             protocol: "ws",
+            port: 24678,
         },
     },
 });

@@ -6,27 +6,24 @@
     "image": "mcr.microsoft.com/devcontainers/typescript-node",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
-        "ghcr.io/dhoeric/features/google-cloud-cli:latest": {},
-        "ghcr.io/devcontainers-contrib/features/redis-homebrew:latest": {}
+        "ghcr.io/dhoeric/features/google-cloud-cli:latest": {}
     },
     // Use "forwardPorts" to make a list of ports inside the container available locally.
     "forwardPorts": [
         3000, // default port
         24678 // vite hmr server
     ],
-    "runArgs": [
-        "--hostname=${localEnv:HOSTNAME}"
-    ],
+    "runArgs": ["--hostname=${localEnv:HOSTNAME}"],
     // "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
             "extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"redhat.vscode-yaml",
-				"yzhang.markdown-all-in-one",
-				"GoogleCloudTools.cloudcode",
-				"esbenp.prettier-vscode"
-			]
+                "streetsidesoftware.code-spell-checker",
+                "redhat.vscode-yaml",
+                "yzhang.markdown-all-in-one",
+                "GoogleCloudTools.cloudcode",
+                "esbenp.prettier-vscode"
+            ]
         }
     },
     "containerEnv": {
