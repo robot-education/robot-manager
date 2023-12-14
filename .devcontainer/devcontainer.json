@@ -23,7 +23,8 @@
                 "streetsidesoftware.code-spell-checker",
                 "redhat.vscode-yaml",
                 "yzhang.markdown-all-in-one",
-                "GoogleCloudTools.cloudcode"
+                "GoogleCloudTools.cloudcode",
+                "arcanis.vscode-zipfs"
             ]
         }
     },

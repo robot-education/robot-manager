@@ -1,29 +1,34 @@
 {
-    "terminal.integrated.profiles.linux": {
-        "bash": {
-            "path": "bash"
-        }
-    },
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "editor.formatOnSave": true,
-    "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 1000,
-    "cSpell.allowCompoundWords": true,
-    "cSpell.words": [
-        "blueprintjs",
-        "nocheck",
-        "resave",
-        "signin",
-        "TOKENTIMEOUT"
-    ],
-    "cSpell.flagWords": [
-        "coincentric",
-        "expresion"
-    ],
-    "files.associations": {
-        "*.json": "jsonc"
-    },
-    "files.eol": "\n",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "typescript.tsdk": "node_modules/typescript/lib"
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "cSpell.allowCompoundWords": true,
+  "cSpell.words": [
+    "blueprintjs",
+    "nocheck",
+    "resave",
+    "signin",
+    "TOKENTIMEOUT"
+  ],
+  "cSpell.flagWords": [
+    "coincentric",
+    "expresion"
+  ],
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "files.eol": "\n",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
