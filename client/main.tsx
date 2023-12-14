@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
@@ -9,9 +9,9 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 
 import "./app.scss";
-import { PartStudioApp } from "./part-studio-app";
-import { AssemblyApp } from "./assembly-app";
-import { GrantDenied } from "./grant-denied";
+import { PartStudioApp } from "./routes/part-studio-app";
+import { AssemblyApp } from "./routes/assembly-app";
+import { GrantDenied } from "./routes/grant-denied";
 
 /**
  * The root component.
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
 const app = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 app.render(
-    <React.StrictMode>
+    <StrictMode>
         <RouterProvider router={router} />
-    </React.StrictMode>,
+    </StrictMode>,
 );

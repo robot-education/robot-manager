@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-    "name": "Node.js",
+    "name": "Robot Manager Container",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "image": "mcr.microsoft.com/devcontainers/typescript-node",
     // Features to add to the dev container. More info: https://containers.dev/features.
@@ -13,7 +13,9 @@
         3000, // default port
         24678 // vite hmr server
     ],
-    "runArgs": ["--hostname=${localEnv:HOSTNAME}"],
+    "runArgs": [
+        "--hostname=${localEnv:HOSTNAME}"
+    ],
     // "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
@@ -21,8 +23,7 @@
                 "streetsidesoftware.code-spell-checker",
                 "redhat.vscode-yaml",
                 "yzhang.markdown-all-in-one",
-                "GoogleCloudTools.cloudcode",
-                "esbenp.prettier-vscode"
+                "GoogleCloudTools.cloudcode"
             ]
         }
     },

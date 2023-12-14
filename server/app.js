@@ -30,7 +30,7 @@ app.use(
             sameSite: "none",
             httpOnly: true,
             secure: true,
-            maxAge: 1000 * 60 * 60 * 24, // 1 day
+            maxAge: 1000 * 3600 * 24, // 1 day
         },
     }),
 );
@@ -106,4 +106,4 @@ app.use(
     }),
 );
 
-module.exports = { app };
+module.exports = app;

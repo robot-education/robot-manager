@@ -16,10 +16,14 @@
         "signin",
         "TOKENTIMEOUT"
     ],
-    "cSpell.flagWords": ["coincentric", "expresion"],
+    "cSpell.flagWords": [
+        "coincentric",
+        "expresion"
+    ],
     "files.associations": {
         "*.json": "jsonc"
     },
     "files.eol": "\n",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

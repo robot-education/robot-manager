@@ -17,4 +17,5 @@ client/
 .husky/
 .devcontainer/
 .vscode/
+node_modules
 
