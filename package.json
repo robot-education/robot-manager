@@ -2,46 +2,30 @@
     "name": "robot-manager-frontend",
     "version": "1.0.0",
     "private": true,
+    "type": "module",
     "workspaces": [
-        "client",
-        "server"
+        "src/client",
+        "src/server"
     ],
     "scripts": {
-        "start": "NODE_ENV=production ts-node server/main.js",
-        "dev": "nodemon server/main.js -w server",
+        "start": "NODE_ENV=production tsx src/server/main.ts",
+        "dev": "nodemon -w src/server/ -x tsx src/server/main.ts",
         "build": "vite build",
         "prepare": "husky install"
     },
     "dependencies": {
-        "ts-node": "^10.9.1",
-        "typescript": "^5.0.4"
+        "tsx": "^4.6.2"
     },
     "devDependencies": {
-        "@types/node": "^20.6.0",
-        "@vitejs/plugin-react": "^4.0.0",
-        "husky": "^8.0.0",
-        "lint-staged": "^14.0.1",
-        "nodemon": "^3.0.1",
-        "prettier": "^3.0.3",
-        "vite": "^4.3.9",
-        "vite-plugin-svgr": "^3.2.0",
-        "vite-tsconfig-paths": "^4.2.0"
-    },
-    "prettier": {
-        "tabWidth": 4
-    },
-    "lint-staged": {
-        "{client,server}/**/*.{html,js,ts,scss}": [
-            "prettier --write"
-        ],
-        "{client,server}/**/*.ts": [
-            "eslint --fix"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "packageManager": "yarn@4.0.2"
+        "@typescript-eslint/eslint-plugin": "^6.14.0",
+        "@typescript-eslint/parser": "^6.14.0",
+        "@vitejs/plugin-react": "^4.2.1",
+        "eslint": "^8.55.0",
+        "husky": "^8.0.3",
+        "nodemon": "^3.0.2",
+        "prettier": "^3.1.1",
+        "typescript": "^5.3.3",
+        "vite": "^5.0.9",
+        "vite-tsconfig-paths": "^4.2.2"
+    }
 }

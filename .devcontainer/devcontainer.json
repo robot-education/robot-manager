@@ -3,6 +3,7 @@
 {
     "name": "Robot Manager Container",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // "dockerFile": "Dockerfile",
     "image": "mcr.microsoft.com/devcontainers/typescript-node",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
@@ -13,18 +14,15 @@
         3000, // default port
         24678 // vite hmr server
     ],
-    "runArgs": [
-        "--hostname=${localEnv:HOSTNAME}"
-    ],
-    // "postCreateCommand": "npm install",
+    "runArgs": ["--hostname=${localEnv:HOSTNAME}"],
+    "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
             "extensions": [
                 "streetsidesoftware.code-spell-checker",
-                "redhat.vscode-yaml",
-                "yzhang.markdown-all-in-one",
-                "GoogleCloudTools.cloudcode",
-                "arcanis.vscode-zipfs"
+                // "yzhang.markdown-all-in-one",
+                // "GoogleCloudTools.cloudcode",
+                "esbenp.prettier-vscode"
             ]
         }
     },
@@ -35,5 +33,5 @@
         "CLOUDSDK_CORE_PROJECT": "robot-manager-123"
     }
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+    // "remoteUser": "node"
 }
