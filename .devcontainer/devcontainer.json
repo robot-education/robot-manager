@@ -4,7 +4,7 @@
     "name": "Robot Manager Container",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     // "dockerFile": "Dockerfile",
-    "image": "mcr.microsoft.com/devcontainers/typescript-node",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:20-bullseye",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
         "ghcr.io/dhoeric/features/google-cloud-cli:latest": {}
@@ -20,8 +20,7 @@
         "vscode": {
             "extensions": [
                 "streetsidesoftware.code-spell-checker",
-                // "yzhang.markdown-all-in-one",
-                // "GoogleCloudTools.cloudcode",
+                "GoogleCloudTools.cloudcode",
                 "esbenp.prettier-vscode"
             ]
         }
@@ -31,7 +30,11 @@
         "CHOKIDAR_USEPOLLING": "true",
         "WATCHPACK_POLLING": "true",
         "CLOUDSDK_CORE_PROJECT": "robot-manager-123"
-    }
+    },
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "node"
+    "remoteUser": "root",
+    // Use a named volume to improve performance
+    "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+]
 }

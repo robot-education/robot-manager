@@ -21,13 +21,14 @@
     "files.eol": "\n",
     "editor.formatOnSave": true,
     "npm.packageManager": "npm",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.format.enable": false,
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "typescript.tsserver.log": "verbose"
 }

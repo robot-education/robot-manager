@@ -5,7 +5,7 @@ import {
     FormGroup,
     InputGroup,
     Intent,
-    Tooltip,
+    Tooltip
 } from "@blueprintjs/core";
 
 import { ApiDialog } from "../common/api-dialog";
@@ -17,20 +17,17 @@ export function PartStudio(): JSX.Element {
     const [assemblyName, setAssemblyName] = useState("Assembly");
     const [assemblyUrl, setAssemblyUrl] = useState<string | undefined>();
 
-    const temp = 5;
-
     const executeGenerateAssembly = async (): Promise<boolean> => {
-        const result = await post(
-            "/generate-assembly",
-            currentPathQuery(),
-            {
-                name: assemblyName
-            });
-        if (result == null) { return false; }
+        const result = await post("/generate-assembly", currentPathQuery(), {
+            name: assemblyName
+        });
+        if (result == null) {
+            return false;
+        }
         const assemblyPath = getCurrentPath();
         assemblyPath.elementId = result.elementId;
         setAssemblyUrl(
-            `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`,
+            `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`
         );
         // if (autoAssemble) {
         // const result = await post("/auto-assembly", assemblyPath.elementObject());
@@ -39,32 +36,35 @@ export function PartStudio(): JSX.Element {
         return true;
     };
 
-    const openAssembly = (<Button
-        text="Open assembly"
-        intent="primary"
-        icon="share"
-        onClick={() => {
-            // setMenuState(MenuState.CLOSED);
-            window.open(assemblyUrl);
-        }}
-    />);
+    const openAssembly = (
+        <Button
+            text="Open assembly"
+            intent="primary"
+            icon="share"
+            onClick={() => {
+                // setMenuState(MenuState.CLOSED);
+                window.open(assemblyUrl);
+            }}
+        />
+    );
 
-    const options = (<>
-        <FormGroup
-            label="Assembly name"
-            labelFor="assembly-name"
-            labelInfo="(required)"
-        >
-            <Tooltip content={"The name of the generated assembly"}>
-                <InputGroup
-                    id="assembly-name"
-                    value={assemblyName}
-                    intent={assemblyName === "" ? Intent.DANGER : undefined}
-                    onChange={handleStringChange(setAssemblyName)}
-                />
-            </Tooltip>
-        </FormGroup>
-        {/* <FormGroup
+    const options = (
+        <>
+            <FormGroup
+                label="Assembly name"
+                labelFor="assembly-name"
+                labelInfo="(required)"
+            >
+                <Tooltip content={"The name of the generated assembly"}>
+                    <InputGroup
+                        id="assembly-name"
+                        value={assemblyName}
+                        intent={assemblyName === "" ? Intent.DANGER : undefined}
+                        onChange={handleStringChange(setAssemblyName)}
+                    />
+                </Tooltip>
+            </FormGroup>
+            {/* <FormGroup
             label="Execute auto assembly"
             labelFor="auto-assemble"
             inline={true}
@@ -81,19 +81,22 @@ export function PartStudio(): JSX.Element {
                 />
             </Tooltip>
         </FormGroup> */}
-    </>);
+        </>
+    );
 
-    const generateAssemblyDialog = (<ApiDialog
-        title="Generate assembly"
-        description="Generate a new assembly from the current part studio."
-        options={options}
-        disabled={assemblyName === ""}
-        execute={executeGenerateAssembly}
-        loadingMessage="Generating assembly"
-        successMessage="Successfully generated assembly"
-        successDescription="Remember to fix a part in the assembly to lock it in place."
-        successActions={openAssembly}
-    />);
+    const generateAssemblyDialog = (
+        <ApiDialog
+            title="Generate assembly"
+            description="Generate a new assembly from the current part studio."
+            options={options}
+            disabled={assemblyName === ""}
+            execute={executeGenerateAssembly}
+            loadingMessage="Generating assembly"
+            successMessage="Successfully generated assembly"
+            successDescription="Remember to fix a part in the assembly to lock it in place."
+            successActions={openAssembly}
+        />
+    );
 
     return generateAssemblyDialog;
 }
