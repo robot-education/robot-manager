@@ -10,7 +10,7 @@ import {
 
 import classNames from "classnames";
 
-export interface IdealStateProps extends NonIdealStateProps {
+export interface NonIdealStateOverrideProps extends NonIdealStateProps {
     /**
      * The intent of the component. If left undefined, the icon will use a muted style.
      */
@@ -20,17 +20,17 @@ export interface IdealStateProps extends NonIdealStateProps {
 /**
  * A variaint of NonIdealState which supports setting the icon intent.
  */
-export class NonIdealStateOverride extends AbstractPureComponent<IdealStateProps> {
+export class NonIdealStateOverride extends AbstractPureComponent<NonIdealStateOverrideProps> {
     private nonIdealState: NonIdealState;
 
-    public constructor(props: IdealStateProps) {
+    public constructor(props: NonIdealStateOverrideProps) {
         super(props);
         this.nonIdealState = new NonIdealState(props);
         this.nonIdealState["maybeRenderVisual"] =
             this.maybeRenderVisualOverride;
     }
 
-    public static defaultProps: Partial<IdealStateProps> = {
+    public static defaultProps: Partial<NonIdealStateOverrideProps> = {
         iconSize: NonIdealStateIconSize.STANDARD,
         layout: "vertical"
     };

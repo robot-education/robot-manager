@@ -9,6 +9,7 @@
     "cSpell.words": [
         "blueprintjs",
         "nocheck",
+        "reduxjs",
         "resave",
         "signin",
         "TOKENTIMEOUT",
@@ -30,5 +31,5 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "typescript.tsserver.log": "verbose"
+    "typescript.tsserver.log": "normal"
 }

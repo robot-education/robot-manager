@@ -10,7 +10,6 @@ import {
 } from "@blueprintjs/core";
 
 import { NonIdealStateOverride } from "./non-ideal-state-override";
-import { ActionCard } from "./action-card";
 
 enum MenuState {
     CLOSED,
@@ -25,10 +24,6 @@ function isDone(menuState: MenuState): boolean {
 
 interface ActionDialogProps {
     title: string;
-    description: string;
-    options?: JSX.Element;
-    disabled?: boolean;
-    execute: () => Promise<boolean>;
     loadingMessage: string;
     successMessage: string;
     successDescription?: string;
@@ -41,34 +36,15 @@ interface ActionDialogProps {
 export function ApiDialog(props: ActionDialogProps): JSX.Element {
     const [menuState, setMenuState] = useState(MenuState.CLOSED);
     const closeMenu = () => {
+        // TODO: Remove CLOSED, navigate up the tree again or something
         setMenuState(MenuState.CLOSED);
     };
 
-    const execute = async () => {
-        setMenuState(MenuState.EXECUTING);
-        const success = await props.execute();
-        setMenuState(success ? MenuState.SUCCESS : MenuState.ERROR);
-    };
-
-    const executeButton = (
-        <Button
-            text="Execute"
-            intent="primary"
-            type="submit"
-            rightIcon="arrow-right"
-            disabled={props.disabled}
-            onClick={execute}
-        />
-    );
-
-    const card = (
-        <ActionCard
-            title={props.title}
-            description={props.description}
-            options={props.options}
-            executeButton={executeButton}
-        />
-    );
+    // const execute = async () => {
+    //     setMenuState(MenuState.EXECUTING);
+    //     const success = await props.execute();
+    //     setMenuState(success ? MenuState.SUCCESS : MenuState.ERROR);
+    // };
 
     const body = (
         <DialogBody useOverflowScrollContainer={false}>
@@ -129,9 +105,9 @@ export function ApiDialog(props: ActionDialogProps): JSX.Element {
         />
     );
 
-    const dialog = (
+    return (
         <Dialog
-            isOpen={menuState !== MenuState.CLOSED}
+            isOpen
             canEscapeKeyClose={isDone(menuState)}
             canOutsideClickClose={isDone(menuState)}
             isCloseButtonShown={isDone(menuState)}
@@ -141,12 +117,5 @@ export function ApiDialog(props: ActionDialogProps): JSX.Element {
             {body}
             {footer}
         </Dialog>
-    );
-
-    return (
-        <>
-            {card}
-            {dialog}
-        </>
     );
 }

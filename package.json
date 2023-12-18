@@ -4,12 +4,12 @@
     "private": true,
     "type": "module",
     "workspaces": [
-        "src/client",
-        "src/server"
+        "client",
+        "server"
     ],
     "scripts": {
-        "start": "NODE_ENV=production tsx src/server/main.ts",
-        "dev": "nodemon -x tsx src/server/main.ts",
+        "start": "NODE_ENV=production tsx server/src/main.ts",
+        "dev": "nodemon -x tsx server/src/main.ts",
         "build": "vite build",
         "prepare": "husky install"
     },

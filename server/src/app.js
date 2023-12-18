@@ -5,7 +5,7 @@ import proxy from "express-http-proxy";
 import passport from "passport";
 import OnshapeStrategy from "passport-onshape";
 
-import config from "./config";
+import config from "./config.ts";
 
 export function getApp() {
     const app = express();

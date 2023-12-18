@@ -4,7 +4,7 @@
 export async function post(
     path: string,
     query: Record<string, string> = {},
-    body: object = {},
+    body: object = {}
 ): Promise<any> {
     path = "/api" + path;
     if (query) {
@@ -14,13 +14,11 @@ export async function post(
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-    })
-        .then((response) => {
-            if (response.status != 200) {
-                throw new Error("Request failed");
-            }
-            return response.json();
-        })
-        .catch(() => null);
+        body: JSON.stringify(body)
+    }).then((res) => {
+        if (!res.ok) {
+            throw res;
+        }
+        return res.json();
+    }).catch(() => null);
 }
