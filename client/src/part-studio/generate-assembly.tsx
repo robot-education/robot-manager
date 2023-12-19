@@ -1,29 +1,57 @@
 import { useState } from "react";
-import { FormGroup, Tooltip, InputGroup, Intent } from "@blueprintjs/core";
-import { post } from "../api/api";
+import {
+    FormGroup,
+    Tooltip,
+    InputGroup,
+    Intent,
+    Button
+} from "@blueprintjs/core";
 import { handleStringChange } from "../handlers";
 import { ActionCard } from "../actions/action-card";
 import { ActionForm } from "../actions/action-form";
-import { ActionFunction } from "react-router-dom";
-import { store } from "../store/store";
-import { selectCurrentPathQuery } from "../app/app-slice";
+import { useFetcher, useNavigate } from "react-router-dom";
 import { ActionDialog } from "../actions/action-dialog";
 import { ActionSpinner } from "../actions/action-spinner";
+import { makeActionInfo } from "../actions/action-context";
+import { ActionError } from "../actions/action-error";
+import { ActionSuccess } from "../actions/action-success";
+import { closeMenu } from "../actions/action-utils";
+
+const actionInfo = makeActionInfo(
+    "Generate assembly",
+    "Generate a new assembly from the current part studio."
+);
 
 export function GenerateAssemblyCard() {
-    return (
-        <ActionCard
-            title="Generate assembly"
-            description="Generate a new assembly from the current part studio."
-        />
-    );
+    return <ActionCard actionInfo={actionInfo} />;
 }
 
 export function GenerateAssembly() {
+    const navigate = useNavigate();
+    const fetcher = useFetcher(actionInfo);
+
+    const openButton = fetcher.data && !fetcher.data.error && (
+        <Button
+            text="Open assembly"
+            intent="primary"
+            icon="share"
+            onClick={() => {
+                window.open(fetcher.data.assemblyUrl);
+                closeMenu(navigate);
+            }}
+        />
+    );
+
     return (
-        <ActionDialog>
+        <ActionDialog actionInfo={actionInfo}>
             <GenerateAssemblyForm />
             <ActionSpinner message="Generating assembly" />
+            <ActionSuccess
+                message="Successfully generated assembly."
+                description="Remember to fix a part in the assembly to lock it in place."
+                actions={openButton}
+            />
+            <ActionError />
         </ActionDialog>
     );
 }
@@ -37,7 +65,7 @@ function GenerateAssemblyForm() {
         <>
             <FormGroup
                 label="Assembly name"
-                labelFor="assembly-name"
+                labelFor="assemblyName"
                 labelInfo="(required)"
             >
                 <Tooltip content={"The name of the generated assembly"}>
@@ -70,52 +98,3 @@ function GenerateAssemblyForm() {
     );
     return <ActionForm disabled={disabled} options={options} />;
 }
-
-export const generateAssemblyHandler: ActionFunction = async ({ request }) => {
-    const data = Object.fromEntries(await request.formData());
-    const currentPath = selectCurrentPathQuery(store.getState());
-
-    const result = await post("/generate-assembly", currentPath, {
-        name: data.assemblyName
-    }).catch(() => null);
-    if (!result) {
-        return { error: true };
-    }
-
-    const assemblyPath = currentPath;
-    assemblyPath.elementId = result.elementId;
-    const assemblyUrl = `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`;
-    // if (data.autoAssemble) {
-    // const result = await post("/auto-assembly", assemblyPath.elementObject());
-    // if (result == null) { return false; }
-    // }
-    return { error: false, assemblyUrl };
-};
-
-// export function ExecuteGenerateAssembly() {
-//     const navigation = useNavigation();
-//     const navigate = useNavigate();
-//     const loaderData = useLoaderData();
-
-//     const openAssembly = loaderData && (
-//         <Button
-//             text="Open assembly"
-//             intent="primary"
-//             icon="share"
-//             onClick={() => {
-//                 window.open(loaderData.assemblyUrl);
-//                 navigate("../..");
-//             }}
-//         />
-//     );
-
-//     return (
-//         <ApiDialog
-//             title="Generate assembly"
-//             loadingMessage="Generating assembly"
-//             successMessage="Successfully generated assembly"
-//             successDescription="Remember to fix a part in the assembly to lock it in place."
-//             successActions={openAssembly}
-//         />
-//     );
-// }

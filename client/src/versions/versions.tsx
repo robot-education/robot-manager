@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { PushVersionCard } from "./push-version";
-import { UpdateReferencesCard } from "./update-references";
+import { UpdateAllReferencesCard } from "./update-all-references";
 
 export function Versions(): JSX.Element {
     return (
         <>
             <PushVersionCard />
-            <UpdateReferencesCard />
+            <UpdateAllReferencesCard />
             <Outlet />
         </>
     );

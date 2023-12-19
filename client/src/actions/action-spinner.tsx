@@ -2,6 +2,7 @@ import { NonIdealState, Spinner, Button } from "@blueprintjs/core";
 import { useNavigate } from "react-router-dom";
 import { ActionDialogBody } from "./action-dialog-body";
 import { ActionState } from "./action-state";
+import { getCloseMenuHandler } from "./action-utils";
 
 interface ActionSpinnerProps {
     message: string;
@@ -10,19 +11,21 @@ interface ActionSpinnerProps {
 export function ActionSpinner(props: ActionSpinnerProps) {
     const navigate = useNavigate();
 
+    const abortButton = (
+        <Button
+            text="Abort"
+            intent="danger"
+            icon="cross"
+            onClick={getCloseMenuHandler(navigate)}
+        />
+    );
+
     return (
-        <ActionDialogBody requiredState={ActionState.LOADING}>
+        <ActionDialogBody requiredState={ActionState.EXECUTING}>
             <NonIdealState
                 icon={<Spinner intent="primary" />}
                 title={props.message}
-                action={
-                    <Button
-                        text="Abort"
-                        intent="danger"
-                        icon="cross"
-                        onClick={() => navigate("..")}
-                    />
-                }
+                action={abortButton}
             />
         </ActionDialogBody>
     );

@@ -1,13 +1,13 @@
 import { DialogBody, DialogFooter } from "@blueprintjs/core";
-import React, { useContext } from "react";
+import { ReactNode, useContext } from "react";
 import { useFetcher } from "react-router-dom";
 import { actionContext } from "./action-context";
 import { getActionState, ActionState } from "./action-state";
 
 interface ActionDialogBodyProps {
     requiredState: ActionState;
-    children: React.ReactNode;
-    actions?: React.ReactNode;
+    children: ReactNode;
+    actions?: ReactNode;
 }
 
 export function ActionDialogBody(props: ActionDialogBodyProps) {
@@ -23,7 +23,7 @@ export function ActionDialogBody(props: ActionDialogBodyProps) {
                     )}
                     {props.children}
                 </DialogBody>
-                <DialogFooter minimal>{props.actions}</DialogFooter>
+                <DialogFooter minimal actions={props.actions} />
             </>
         )
     );

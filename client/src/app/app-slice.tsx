@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ElementPath, PathType, getCurrentPath } from "../api/path";
+import { ElementPath, PathType, getCurrentPath, toQuery } from "../api/path";
 import { TabType } from "../api/tab-type";
 
 interface AppState {
@@ -33,7 +33,7 @@ export const appSlice = createSlice({
         selectCurrentPathQuery: (
             state,
             pathType: PathType = PathType.ELEMENT
-        ) => state.currentPath.toQuery(pathType)
+        ) => toQuery(state.currentPath, pathType)
     }
 });
 

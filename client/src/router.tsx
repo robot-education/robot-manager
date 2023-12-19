@@ -7,12 +7,10 @@ import { Assembly } from "./app/assembly";
 import { Versions } from "./versions/versions";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import {
-    GenerateAssembly,
-    generateAssemblyHandler
-} from "./part-studio/generate-assembly";
+import { GenerateAssembly } from "./part-studio/generate-assembly";
+import { generateAssemblyAction } from "./part-studio/generate-assembly-action";
 import { PushVersion } from "./versions/push-version";
-import { UpdateReferences } from "./versions/update-references";
+import { UpdateAllReferences } from "./versions/update-all-references";
 
 const appElement = (
     <Provider store={store}>
@@ -40,7 +38,7 @@ export const router = createBrowserRouter([
                     {
                         path: "generate-assembly",
                         element: <GenerateAssembly />,
-                        action: generateAssemblyHandler
+                        action: generateAssemblyAction
                     }
                 ]
             },
@@ -53,8 +51,8 @@ export const router = createBrowserRouter([
                         element: <PushVersion />
                     },
                     {
-                        path: "update-references",
-                        element: <UpdateReferences />
+                        path: "update-all-references",
+                        element: <UpdateAllReferences />
                     }
                 ]
             }

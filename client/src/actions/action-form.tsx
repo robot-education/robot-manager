@@ -26,11 +26,13 @@ export function ActionForm(props: ActionFormProps) {
     );
 
     return (
-        <ActionDialogBody
-            requiredState={ActionState.CONFIGURING}
-            actions={executeButton}
-        >
-            <fetcher.Form method="post">{options}</fetcher.Form>
-        </ActionDialogBody>
+        <fetcher.Form method="post">
+            <ActionDialogBody
+                requiredState={ActionState.CONFIGURING}
+                actions={executeButton}
+            >
+                {options}
+            </ActionDialogBody>
+        </fetcher.Form>
     );
 }

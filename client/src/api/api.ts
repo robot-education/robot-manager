@@ -16,9 +16,7 @@ export async function post(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     }).then((res) => {
-        if (!res.ok) {
-            throw res;
-        }
+        if (!res.ok) { throw res; }
         return res.json();
     }).catch(() => null);
 }

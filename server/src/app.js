@@ -90,8 +90,8 @@ export function getApp() {
         return res.status(401).redirect("/signin");
     }
 
-    // Authenticate selected routes
-    app.get(["/assembly", "/partstudio"], checkAuthentication);
+    // Authenticate app
+    app.get("/app", checkAuthentication);
 
     /**
      * Redirect /api calls to the backend.
@@ -104,6 +104,17 @@ export function getApp() {
                     "Basic " + req.user.accessToken;
                 return options;
             }
+            // proxyErrorHandler: (err, res, next) => {
+            // }
+            // userResDectorator: (proxyRes, proxyResData) => {
+            //     if (proxyRes.status == 401) {
+            //         // req.user.accessToken = newToken;
+            //     }
+            //     // if (proxyRes.status == 401) {
+            //     //     return proxyRes.status(200);
+            //     // }
+            //     return proxyResData;
+            // }
         })
     );
     return app;

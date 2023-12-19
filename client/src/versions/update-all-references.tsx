@@ -2,29 +2,23 @@ import { ActionCard } from "../actions/action-card";
 import { makeActionInfo } from "../actions/action-context";
 import { ActionDialog } from "../actions/action-dialog";
 import { ActionError } from "../actions/action-error";
-import { ActionForm } from "../actions/action-form";
 import { ActionSpinner } from "../actions/action-spinner";
 
 const actionInfo = makeActionInfo(
-    "Push version",
-    "Create a version and push it to one or more target documents."
+    "Update all references",
+    "Update all external references in the document to the latest version."
 );
 
-export function PushVersionCard() {
+export function UpdateAllReferencesCard() {
     return <ActionCard actionInfo={actionInfo} />;
 }
 
-export function PushVersion() {
+export function UpdateAllReferences() {
     return (
         <ActionDialog actionInfo={actionInfo}>
-            <PushVersionForm />
-            <ActionSpinner message="Pushing versions" />
+            <ActionSpinner message="Updating references" />
             <ActionError />
         </ActionDialog>
     );
-}
-
-export function PushVersionForm() {
-    const options = undefined;
-    return <ActionForm options={options} />;
+    // return <ActionForm {...titleAndDescription} />;
 }

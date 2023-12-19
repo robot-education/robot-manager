@@ -27,7 +27,6 @@
     },
     "containerEnv": {
         // necessary for hot module reloading
-        "CHOKIDAR_USEPOLLING": "true",
         "WATCHPACK_POLLING": "true",
         "CLOUDSDK_CORE_PROJECT": "robot-manager-123"
     },
