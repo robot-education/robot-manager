@@ -13,7 +13,7 @@ export function CloseButton() {
             text="Close"
             intent={isSuccess ? Intent.NONE : Intent.PRIMARY}
             icon="tick"
-            onClick={closeMenuHandler(navigate)}
+            onClick={closeMenuHandler(fetcher, navigate)}
         />
     );
 }

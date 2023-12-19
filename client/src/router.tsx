@@ -20,6 +20,13 @@ const appElement = (
 
 export const router = createBrowserRouter([
     {
+        path: "/reset-fetcher",
+        action: () => {
+            console.log("Load null");
+            return Promise.resolve(undefined);
+        }
+    },
+    {
         path: "/grantdenied",
         element: <GrantDenied />
     },

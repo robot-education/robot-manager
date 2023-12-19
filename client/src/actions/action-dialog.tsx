@@ -27,7 +27,7 @@ export function ActionDialog(props: ActionDialogProps) {
                 canOutsideClickClose={finished}
                 canEscapeKeyClose={!executing}
                 isCloseButtonShown={!executing}
-                onClose={getCloseMenuHandler(navigate)}
+                onClose={getCloseMenuHandler(fetcher, navigate)}
             >
                 {props.children}
             </Dialog>

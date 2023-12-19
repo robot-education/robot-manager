@@ -30,6 +30,9 @@ export function GenerateAssembly() {
     const navigate = useNavigate();
     const fetcher = useFetcher(actionInfo);
 
+    console.log("Fetcher state: " + fetcher.state);
+    console.log("Fetcher data: " + fetcher.data);
+
     const openButton = fetcher.data && !fetcher.data.error && (
         <Button
             text="Open assembly"
@@ -37,7 +40,7 @@ export function GenerateAssembly() {
             icon="share"
             onClick={() => {
                 window.open(fetcher.data.assemblyUrl);
-                closeMenu(navigate);
+                closeMenu(fetcher, navigate);
             }}
         />
     );

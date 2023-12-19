@@ -28,12 +28,13 @@
     "containerEnv": {
         // necessary for hot module reloading
         "WATCHPACK_POLLING": "true",
+        "CHOKIDAR_USEPOLLING": "true",
         "CLOUDSDK_CORE_PROJECT": "robot-manager-123"
     },
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     "remoteUser": "root",
     // Use a named volume to improve performance
     "mounts": [
-    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
-]
+        "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+    ]
 }
