@@ -16,8 +16,6 @@
             "type": "npm",
             "script": "dev",
             "problemMatcher": []
-            // "dependsOrder": "sequence",
-            // "dependsOn": ["Development redis server"]
         }
         // {
         //     "label": "Development redis server",

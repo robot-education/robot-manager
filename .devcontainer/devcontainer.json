@@ -1,9 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-    "name": "Node.js",
+    "name": "Robot Manager Container",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/typescript-node",
+    // "dockerFile": "Dockerfile",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:20-bullseye",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
         "ghcr.io/dhoeric/features/google-cloud-cli:latest": {}
@@ -14,13 +15,11 @@
         24678 // vite hmr server
     ],
     "runArgs": ["--hostname=${localEnv:HOSTNAME}"],
-    // "postCreateCommand": "npm install",
+    "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
             "extensions": [
                 "streetsidesoftware.code-spell-checker",
-                "redhat.vscode-yaml",
-                "yzhang.markdown-all-in-one",
                 "GoogleCloudTools.cloudcode",
                 "esbenp.prettier-vscode"
             ]
@@ -28,10 +27,14 @@
     },
     "containerEnv": {
         // necessary for hot module reloading
-        "CHOKIDAR_USEPOLLING": "true",
         "WATCHPACK_POLLING": "true",
+        "CHOKIDAR_USEPOLLING": "true",
         "CLOUDSDK_CORE_PROJECT": "robot-manager-123"
-    }
+    },
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+    "remoteUser": "root",
+    // Use a named volume to improve performance
+    "mounts": [
+        "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+    ]
 }

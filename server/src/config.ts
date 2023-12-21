@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * The port this application should run on. This may be `undefined`.
@@ -11,29 +12,29 @@ const isProduction = process.env.NODE_ENV === "production";
  * The absolute URL of the OAuth callback URL. This will be the `/oauthRedirect` endpoint
  * on this server, e.g. `https://your-machine.example.com/oauthRedirect`.
  */
-const oauthCallbackUrl = process.env.OAUTH_CALLBACK_URL;
+const oauthCallbackUrl: string = process.env.OAUTH_CALLBACK_URL ?? "";
 
 /**
  * The Client ID of this application as registered in the Onshape Dev Portal.
  */
-const oauthClientId = process.env.OAUTH_CLIENT_ID;
+const oauthClientId: string = process.env.OAUTH_CLIENT_ID ?? "";
 
 /**
  * The Client Secret of this application as registered in the Onshape Dev Portal.
  */
-const oauthClientSecret = process.env.OAUTH_CLIENT_SECRET;
+const oauthClientSecret: string = process.env.OAUTH_CLIENT_SECRET ?? "";
 
 /**
  * The parent URL of the Onshape OAuth endpoints, e.g. `https://oauth.onshape.com`.
  */
-const oauthUrl = process.env.OAUTH_URL;
+const oauthUrl: string = process.env.OAUTH_URL ?? "";
 
 /**
  * The secret for handling session data.
  */
-const sessionSecret = process.env.SESSION_SECRET;
+const sessionSecret: string = process.env.SESSION_SECRET ?? "";
 
-const backendUrl = process.env.BACKEND_URL;
+const backendUrl: string = process.env.BACKEND_URL ?? "";
 
 /**
  * The URL of the webhook callback URL. This will be the `/api/event` endpoint on
@@ -61,7 +62,10 @@ const backendUrl = process.env.BACKEND_URL;
  * @returns {boolean} `true` if the given string is a valid URL, and has one of the
  *      given protocols (if provided); or `false` otherwise.
  */
-function isValidUrl(stringToTest, protocols) {
+function isValidUrl(
+    stringToTest: string | undefined,
+    protocols: string | string[]
+): boolean {
     if (!stringToTest) {
         return false;
     }
@@ -95,17 +99,15 @@ function isValidUrl(stringToTest, protocols) {
  *
  * @param {string} stringToTest The string to check for validity.
  */
-function isValidHttpUrl(stringToTest) {
+function isValidHttpUrl(stringToTest: string | undefined): boolean {
     return isValidUrl(stringToTest, ["http:", "https:"]);
 }
 
 /**
  * Checks if the given string has content, i.e. is not null and does not contain solely
  * whitespace characters.
- *
- * @param {string} stringToTest The string to check for validity.
  */
-function isValidString(stringToTest) {
+function isValidString(stringToTest: string | undefined): boolean {
     if (!stringToTest) return false;
     if (!stringToTest.trim()) return false;
     return true;
@@ -134,13 +136,14 @@ if (errors.length !== 0) {
     throw new Error("Invalid configuration: " + errors.join(", "));
 }
 
-module.exports = {
-    isProduction,
+const config = {
     port,
+    isProduction,
     oauthCallbackUrl,
     oauthClientId,
     oauthClientSecret,
     oauthUrl,
-    backendUrl,
     sessionSecret,
+    backendUrl
 };
+export default config;
