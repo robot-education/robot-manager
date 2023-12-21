@@ -1,13 +1,15 @@
 import { ActionCard } from "../actions/action-card";
-import { makeActionInfo } from "../actions/action-context";
 import { ActionDialog } from "../actions/action-dialog";
 import { ActionError } from "../actions/action-error";
 import { ActionSpinner } from "../actions/action-spinner";
 
-const actionInfo = makeActionInfo(
-    "Update all references",
-    "Update all external references in the document to the latest version."
-);
+const actionInfo = {
+    title: "Update all references",
+    description:
+        "Update all external references in the document to the latest version.",
+    parentId: "/app/versions",
+    route: "update-all-references"
+};
 
 export function UpdateAllReferencesCard() {
     return <ActionCard actionInfo={actionInfo} />;

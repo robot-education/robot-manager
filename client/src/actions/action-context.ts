@@ -1,23 +1,12 @@
+import { RoutePaths } from "@tanstack/react-router";
 import { createContext } from "react";
-
-export const actionContext = createContext<ActionInfo>({
-    title: "",
-    description: "",
-    key: ""
-});
-export const ActionContextProvider = actionContext.Provider;
 
 export interface ActionInfo {
     title: string;
     description: string;
-    key: string;
+    parentId: RoutePaths<any>;
+    route: any;
 }
 
-export function makeActionInfo(title: string, description: string) {
-    const words = title.toLowerCase().split(" ");
-    return {
-        title,
-        description,
-        key: words.join("-")
-    };
-}
+export const actionContext = createContext<ActionInfo>(null!);
+export const ActionContextProvider = actionContext.Provider;

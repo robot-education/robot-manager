@@ -1,9 +1,9 @@
 import { Dialog } from "@blueprintjs/core";
-import { useFetcher, useNavigate } from "react-router-dom";
-import { ActionState, getActionState, isFinished } from "./action-state";
 import { ActionContextProvider, ActionInfo } from "./action-context";
 import { ReactNode } from "react";
-import { getCloseMenuHandler } from "./action-utils";
+import { closeMenu } from "./action-utils";
+import { useMutationState } from "@tanstack/react-query";
+import { ActionState } from "./action-state";
 
 interface ActionDialogProps {
     children: ReactNode;
@@ -12,22 +12,26 @@ interface ActionDialogProps {
 
 export function ActionDialog(props: ActionDialogProps) {
     const { actionInfo } = props;
-    const navigate = useNavigate();
-    const fetcher = useFetcher(actionInfo);
+    const statuses = useMutationState({
+        filters: { mutationKey: [actionInfo.route] },
+        select: (mutation) => mutation.state.status
+    });
 
-    const actionState = getActionState(fetcher);
-    const finished = isFinished(actionState);
-    const executing = actionState === ActionState.EXECUTING;
-
+    if (statuses.length == 0) {
+        return undefined;
+    }
+    const status = statuses[0];
     return (
         <ActionContextProvider value={actionInfo}>
             <Dialog
                 isOpen
                 title={actionInfo.title}
-                canOutsideClickClose={finished}
-                canEscapeKeyClose={!executing}
-                isCloseButtonShown={!executing}
-                onClose={getCloseMenuHandler(fetcher, navigate)}
+                canOutsideClickClose={
+                    status == ActionState.SUCCESS || status == ActionState.ERROR
+                }
+                canEscapeKeyClose={status != ActionState.EXECUTING}
+                isCloseButtonShown={status != ActionState.EXECUTING}
+                onClose={closeMenu}
             >
                 {props.children}
             </Dialog>

@@ -7,14 +7,17 @@ import {
     NavbarGroup,
     NavbarHeading
 } from "@blueprintjs/core";
-import { useMatch, useNavigate } from "react-router-dom";
 import { selectTabType } from "./app-slice";
 import { useAppSelector } from "../store/hooks";
+import { useMatchRoute, useNavigate } from "@tanstack/react-router";
+import { appRoute } from "../routes";
 
 export function AppNavbar(): JSX.Element {
-    const navigate = useNavigate();
     const tabType = useAppSelector(selectTabType);
-    const isHome = Boolean(useMatch({ path: `/app/${tabType}`, end: false }));
+    const navigate = useNavigate({ from: appRoute.id });
+    const matchRoute = useMatchRoute();
+    const isHome = Boolean(matchRoute({ to: `/app/${tabType}/*` }));
+
     return (
         <Navbar>
             <NavbarGroup>
@@ -26,7 +29,7 @@ export function AppNavbar(): JSX.Element {
                     minimal
                     active={isHome}
                     intent={isHome ? Intent.PRIMARY : Intent.NONE}
-                    onClick={() => navigate(tabType)}
+                    onClick={() => navigate({ to: tabType })}
                 />
                 <Button
                     icon="git-new-branch"
@@ -34,7 +37,7 @@ export function AppNavbar(): JSX.Element {
                     minimal
                     active={!isHome}
                     intent={!isHome ? Intent.PRIMARY : Intent.NONE}
-                    onClick={() => navigate("versions")}
+                    onClick={() => navigate({ to: "versions" })}
                 />
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>

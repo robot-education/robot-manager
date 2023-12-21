@@ -1,6 +1,5 @@
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
-import { RouterProvider } from "react-router-dom";
 import { FocusStyleManager } from "@blueprintjs/core";
 // import { Icons, IconPaths } from "@blueprintjs/icons";
 
@@ -11,6 +10,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "./app.scss";
+import { RouterProvider } from "@tanstack/react-router";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -36,3 +36,13 @@ app.render(
         <RouterProvider router={router} />
     </StrictMode>
 );
+
+// const rootElement = document.getElementById("app")!;
+// if (!rootElement.innerHTML) {
+//     const root = ReactDOM.createRoot(rootElement);
+//     root.render(
+//         <StrictMode>
+//             <RouterProvider router={router} />
+//         </StrictMode>
+//     );
+// }

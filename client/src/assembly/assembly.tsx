@@ -18,7 +18,8 @@ export function Assembly(): JSX.Element {
     //     return result != null;
     // };
 
-    const assemblyMirrorExecuteDialog = (<></>
+    const assemblyMirrorExecuteDialog = (
+        <></>
         // <ApiDialog
         //     title="Assembly mirror"
         //     execute={executeAssemblyMirror}
@@ -27,9 +28,10 @@ export function Assembly(): JSX.Element {
         // />
     );
 
-    return (<>
-        {assemblyMirrorExecuteDialog}
-        {/* {autoAssemblyExecuteDialog} */}
-    </>
+    return (
+        <>
+            {assemblyMirrorExecuteDialog}
+            {/* {autoAssemblyExecuteDialog} */}
+        </>
     );
 }

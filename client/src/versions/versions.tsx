@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "@tanstack/react-router";
 import { PushVersionCard } from "./push-version";
 import { UpdateAllReferencesCard } from "./update-all-references";
 

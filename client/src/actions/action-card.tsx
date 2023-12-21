@@ -1,6 +1,6 @@
 import { Button, Card, H4, Intent } from "@blueprintjs/core";
-import {  useNavigate } from "react-router-dom";
 import { ActionInfo } from "./action-context";
+import { useNavigate } from "@tanstack/react-router";
 
 interface ActionCardProps {
     actionInfo: ActionInfo;
@@ -11,7 +11,7 @@ interface ActionCardProps {
  */
 export function ActionCard(props: ActionCardProps): JSX.Element {
     const { actionInfo } = props;
-    const navigate = useNavigate();
+    const navigate = useNavigate({ from: actionInfo.parentId });
     return (
         <Card>
             <H4>{actionInfo.title}</H4>
@@ -20,7 +20,7 @@ export function ActionCard(props: ActionCardProps): JSX.Element {
                 text="Configure"
                 rightIcon="arrow-right"
                 intent={Intent.PRIMARY}
-                onClick={() => navigate(actionInfo.key)}
+                onClick={() => navigate({ to: actionInfo.route })}
             />
         </Card>
     );

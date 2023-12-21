@@ -1,8 +1,8 @@
 import { DialogBody, DialogFooter } from "@blueprintjs/core";
 import { ReactNode, useContext } from "react";
-import { useFetcher } from "react-router-dom";
 import { actionContext } from "./action-context";
-import { getActionState, ActionState } from "./action-state";
+import { ActionState } from "./action-state";
+import { useMutationState } from "@tanstack/react-query";
 
 interface ActionDialogBodyProps {
     requiredState: ActionState;
@@ -11,14 +11,24 @@ interface ActionDialogBodyProps {
 }
 
 export function ActionDialogBody(props: ActionDialogBodyProps) {
+    const { requiredState } = props;
     const actionInfo = useContext(actionContext);
-    const fetcher = useFetcher(actionInfo);
-    const actionState = getActionState(fetcher);
+    const statuses = useMutationState({
+        filters: { mutationKey: [actionInfo.route] },
+        select: (mutation) => mutation.state.status
+    });
+
+    if (statuses.length == 0) {
+        return undefined;
+    }
+
+    const status = statuses[0];
+
     return (
-        actionState == props.requiredState && (
+        status === requiredState && (
             <>
                 <DialogBody useOverflowScrollContainer={false}>
-                    {actionState == ActionState.CONFIGURING && (
+                    {status === ActionState.CONFIGURING && (
                         <p>{actionInfo.description}</p>
                     )}
                     {props.children}

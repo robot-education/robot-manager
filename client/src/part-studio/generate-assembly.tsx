@@ -6,41 +6,66 @@ import {
     Intent,
     Button
 } from "@blueprintjs/core";
+import { useMutation } from "@tanstack/react-query";
 import { handleStringChange } from "../handlers";
 import { ActionCard } from "../actions/action-card";
 import { ActionForm } from "../actions/action-form";
-import { useFetcher, useNavigate } from "react-router-dom";
 import { ActionDialog } from "../actions/action-dialog";
 import { ActionSpinner } from "../actions/action-spinner";
-import { makeActionInfo } from "../actions/action-context";
 import { ActionError } from "../actions/action-error";
 import { ActionSuccess } from "../actions/action-success";
-import { closeMenu } from "../actions/action-utils";
+import { ActionInfo } from "../actions/action-context";
+import { selectCurrentPathQuery } from "../app/app-slice";
+import { store } from "../store/store";
+import { post } from "../api/api";
 
-const actionInfo = makeActionInfo(
-    "Generate assembly",
-    "Generate a new assembly from the current part studio."
-);
+interface GenerateAssemblyData {
+    assemblyName: string;
+}
+
+async function generateAssemblyMutation(args: GenerateAssemblyData) {
+    const currentPath = selectCurrentPathQuery(store.getState());
+
+    const result = await post("/generate-assembly", currentPath, {
+        name: args.assemblyName
+    }).catch(() => null);
+    if (!result) {
+        throw new Error("Request failed.");
+    }
+
+    const assemblyPath = Object.assign({}, currentPath);
+    assemblyPath.elementId = result.elementId;
+    const assemblyUrl = `https://cad.onshape.com/documents/${assemblyPath.documentId}/w/${assemblyPath.workspaceId}/e/${assemblyPath.elementId}`;
+    // if (data.autoAssemble) {
+    // const result = await post("/auto-assembly", assemblyPath.elementObject());
+    // if (result == null) { return false; }
+    // }
+    return { assemblyUrl };
+}
+
+const actionInfo: ActionInfo = {
+    title: "Generate assembly",
+    description: "Generate a new assembly from the current part studio.",
+    parentId: "/app/part-studio",
+    route: "generate-assembly"
+};
 
 export function GenerateAssemblyCard() {
     return <ActionCard actionInfo={actionInfo} />;
 }
 
 export function GenerateAssembly() {
-    const navigate = useNavigate();
-    const fetcher = useFetcher(actionInfo);
-
-    console.log("Fetcher state: " + fetcher.state);
-    console.log("Fetcher data: " + fetcher.data);
-
-    const openButton = fetcher.data && !fetcher.data.error && (
+    const mutation = useMutation({
+        mutationKey: [actionInfo.route],
+        mutationFn: generateAssemblyMutation
+    });
+    const openButton = mutation.isSuccess && (
         <Button
             text="Open assembly"
             intent="primary"
             icon="share"
             onClick={() => {
-                window.open(fetcher.data.assemblyUrl);
-                closeMenu(fetcher, navigate);
+                window.open(mutation.data.assemblyUrl);
             }}
         />
     );

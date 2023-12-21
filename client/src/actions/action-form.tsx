@@ -1,19 +1,15 @@
 import { Button } from "@blueprintjs/core";
-import { useFetcher } from "react-router-dom";
-import { actionContext } from "./action-context";
-import { useContext } from "react";
 import { ActionState } from "./action-state";
 import { ActionDialogBody } from "./action-dialog-body";
+import { ReactNode } from "react";
 
 interface ActionFormProps {
     disabled?: boolean;
-    options?: JSX.Element;
+    options?: ReactNode;
 }
 
 export function ActionForm(props: ActionFormProps) {
     const { disabled, options } = props;
-    const actionInfo = useContext(actionContext);
-    const fetcher = useFetcher(actionInfo);
 
     const executeButton = (
         <Button
@@ -26,13 +22,13 @@ export function ActionForm(props: ActionFormProps) {
     );
 
     return (
-        <fetcher.Form method="post">
-            <ActionDialogBody
-                requiredState={ActionState.CONFIGURING}
-                actions={executeButton}
-            >
-                {options}
-            </ActionDialogBody>
-        </fetcher.Form>
+        // <fetcher.Form method="post">
+        <ActionDialogBody
+            requiredState={ActionState.CONFIGURING}
+            actions={executeButton}
+        >
+            {options}
+        </ActionDialogBody>
+        // </fetcher.Form>
     );
 }
