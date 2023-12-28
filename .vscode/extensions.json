@@ -1,7 +1,8 @@
 {
     "recommendations": [
-                "streetsidesoftware.code-spell-checker",
-                "GoogleCloudTools.cloudcode",
-                "esbenp.prettier-vscode"
+        "streetsidesoftware.code-spell-checker",
+        "GoogleCloudTools.cloudcode",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
     ]
 }

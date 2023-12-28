@@ -132,3 +132,4 @@ app.yaml
 dist/
 https-cert/
 .pnpm-store/
+certificates

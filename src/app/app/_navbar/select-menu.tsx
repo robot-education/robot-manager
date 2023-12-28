@@ -1,0 +1,41 @@
+"use client";
+
+import { Button, Intent, Menu, Popover } from "@blueprintjs/core";
+import { MenuType, getMenuProps, useCurrentMenuType } from "@/common/menu-type";
+import { SelectMenuItem } from "./select-menu-item";
+import { useAppType } from "@/common/onshape-params";
+
+export function SelectMenu() {
+    const appType = useAppType();
+    const currentMenuType = useCurrentMenuType();
+
+    const currentMenuButton = (
+        <Button
+            {...getMenuProps(currentMenuType)}
+            rightIcon="caret-down"
+            intent={Intent.PRIMARY}
+            alignText="left"
+            minimal
+        />
+    );
+
+    const currentMenuTypes = Object.values(MenuType)
+        .filter((menuType) => menuType !== currentMenuType)
+        .filter(
+            (menuType) =>
+                appType.toString() === menuType.toString() ||
+                menuType === MenuType.VERSIONS
+        );
+
+    const menuItems = currentMenuTypes.map((menuType) => (
+        <SelectMenuItem key={menuType} menuType={menuType} />
+    ));
+
+    const menu = <Menu>{menuItems}</Menu>;
+
+    return (
+        <Popover content={menu} minimal placement="bottom-end">
+            {currentMenuButton}
+        </Popover>
+    );
+}
