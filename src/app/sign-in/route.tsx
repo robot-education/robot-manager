@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Disable caching
 export const dynamic = "force-dynamic";
 
 /**

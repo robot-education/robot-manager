@@ -1,7 +1,7 @@
 # robot-manager
 Code for performing automatic assembly operations in Onshape.
 
-Based on sample code from Onshape"s app-gltf-viewer.
+Based on sample code from Onshape's [app-gltf-viewer](https://github.com/onshape-public/app-gltf-viewer).
 
 ### Setup
 

@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AppType } from "./common/app-type";
+import { AppType } from "@/common/app-type";
 
-export async function middleware(request: NextRequest) {
+export const dynamic = "force-dynamic";
+
+// export async function middleware(request: NextRequest) {
+export async function GET(request: NextRequest) {
+    console.log("App cookies: ");
+    console.log(request.cookies.toString());
     const json = await fetch(process.env.BACKEND_URL + "/authorized", {
         // Have to manually include cookies in fetch
         headers: { Cookie: request.cookies.toString() }
@@ -21,9 +26,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
 }
 
-export const config = {
-    /**
-     * Match /app from Onshape
-     */
-    matcher: ["/app"]
-};
+// export const config = {
+//     /**
+//      * Match /app from Onshape
+//      */
+//     matcher: ["/app"]
+// };
