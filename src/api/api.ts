@@ -13,7 +13,12 @@ export async function post(
     }
     return fetch(path, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Origin": "https://localhost:3000"
+        },
         body: JSON.stringify(body),
         signal
     })

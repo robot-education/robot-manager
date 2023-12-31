@@ -3,21 +3,30 @@ import { AppType } from "@/common/app-type";
 
 export const dynamic = "force-dynamic";
 
-// export async function middleware(request: NextRequest) {
 export async function GET(request: NextRequest) {
     console.log("App cookies: ");
-    console.log(request.cookies.toString());
-    const json = await fetch(process.env.BACKEND_URL + "/authorized", {
-        // Have to manually include cookies in fetch
-        headers: { Cookie: request.cookies.toString() }
-    })
-        .then((res) => res.json())
-        .catch(() => null);
+    console.log(request.cookies);
 
-    if (!json || !json["authorized"]) {
-        const url = request.nextUrl;
-        url.pathname = "/sign-in";
-        return NextResponse.redirect(url);
+    if (request.nextUrl.searchParams.get("needAuth") != "false") {
+        const json = await fetch(process.env.BACKEND_URL + "/authorized", {
+            // Have to manually include cookies in fetch
+            credentials: "include",
+            headers: { Cookie: request.cookies.toString() }
+        })
+            .then((res) => res.json())
+            .catch(() => null);
+
+        if (!json || !json["authorized"]) {
+            const url = request.nextUrl;
+            url.pathname = "/sign-in";
+            url.searchParams.set("needAuth", "false");
+
+            const response = NextResponse.redirect(url);
+            response.headers.set("credentials", "include");
+            return response;
+        }
+    } else {
+        console.log("Already authed");
     }
 
     const url = request.nextUrl;

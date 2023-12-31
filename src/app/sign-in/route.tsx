@@ -9,8 +9,6 @@ export const dynamic = "force-dynamic";
  * Otherwise, we use the current url (including params) set to /app as the redirect url.
  */
 export async function GET(request: NextRequest) {
-    console.log("Sign in cookies:");
-    console.log(request.cookies.toString());
     // use nextUrl to keep query params
     let redirectUrl: string;
     const searchParams = request.nextUrl.searchParams;
@@ -28,5 +26,17 @@ export async function GET(request: NextRequest) {
     url.searchParams.set("redirectUrl", redirectUrl);
     url.searchParams.set("grantDeniedUrl", grantDeniedUrl);
 
-    return NextResponse.redirect(url);
+    // await fetch(url, {
+    //     headers: {
+    //         Cookie: request.cookies.toString()
+    //     }
+    // });
+    // return NextResponse.redirect("https://oauth.onshape.com/authorize", {
+    //     headers: {
+    //         Cookie: request.cookies.toString()
+    //     }
+    // });
+    const response = NextResponse.redirect(url);
+    response.headers.set("credentials", "include");
+    return response;
 }
