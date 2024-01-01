@@ -1,5 +1,5 @@
-import { ActionCard } from "@/actions/action-card";
-import { ActionInfo } from "@/actions/action-context";
+import { ActionCard } from "../actions/action-card";
+import { ActionInfo } from "../actions/action-context";
 
 const actionInfo: ActionInfo = {
     title: "Push version",

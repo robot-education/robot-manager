@@ -1,21 +1,15 @@
-import { ElementPath } from "@/api/path";
-import { useSearchParams } from "next/navigation";
-import {
-    createContext,
-    useState,
-    useEffect,
-    ReactNode,
-    useContext
-} from "react";
+import { ElementPath } from "../api/path";
+import { createContext, useState, useEffect, useContext } from "react";
 import { AppType } from "./app-type";
+import { useSearchParams } from "react-router-dom";
 
 export interface OnshapeParams extends ElementPath {
     appType: AppType;
 }
 
-const onshapeParamsContext = createContext<OnshapeParams>(null!);
+export const onshapeParamsContext = createContext<OnshapeParams>(null!);
 
-function useSaveOnshapeParams(): OnshapeParams {
+export function useSaveOnshapeParams(): OnshapeParams {
     // Initial state gets used for first render before getting immediately overwritten
     const [onshapeParams, setOnshapeParams] = useState<OnshapeParams>({
         appType: AppType.PART_STUDIO,
@@ -23,11 +17,11 @@ function useSaveOnshapeParams(): OnshapeParams {
         workspaceId: "",
         elementId: ""
     });
-    const params = useSearchParams();
+    const params = useSearchParams()[0];
     useEffect(() => {
         if (params.has("appType")) {
             setOnshapeParams({
-                appType: params.get("appType")! as AppType,
+                appType: params.get("appType") as AppType,
                 documentId: params.get("documentId")!,
                 workspaceId: params.get("workspaceId")!,
                 workspaceOrVersion: params.get("workspaceOrVersion")!,
@@ -36,15 +30,6 @@ function useSaveOnshapeParams(): OnshapeParams {
         }
     }, [params]);
     return onshapeParams;
-}
-
-export function OnshapeParamsProvider(props: { children: ReactNode }) {
-    const appType = useSaveOnshapeParams();
-    return (
-        <onshapeParamsContext.Provider value={appType}>
-            {props.children}
-        </onshapeParamsContext.Provider>
-    );
 }
 
 export function useAppType(): AppType {

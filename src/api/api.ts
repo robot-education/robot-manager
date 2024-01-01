@@ -6,6 +6,7 @@ export async function post(
     signal: AbortSignal,
     query: Record<string, string> = {},
     body: object = {}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> {
     path = "/api" + path;
     if (query) {
@@ -13,12 +14,7 @@ export async function post(
     }
     return fetch(path, {
         method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Origin": "https://localhost:3000"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
         signal
     })

@@ -1,5 +1,3 @@
-"use client";
-
 import { Button, Intent } from "@blueprintjs/core";
 import { useCloseMenuRouter, useCurrentMutation } from "./action-utils";
 

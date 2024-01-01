@@ -1,5 +1,3 @@
-"use client";
-
 import { DialogBody, DialogFooter } from "@blueprintjs/core";
 import { ReactNode } from "react";
 import { useActionInfo } from "./action-context";

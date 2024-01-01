@@ -1,7 +1,7 @@
 "use client";
 
 import { BlueprintIcons_16Id } from "@blueprintjs/icons/lib/esm/generated/16px/blueprint-icons-16";
-import { usePathname, useRouter } from "next/navigation";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export enum MenuType {
     PART_STUDIO = "part-studio",
@@ -10,8 +10,11 @@ export enum MenuType {
     // FEATURE_SCRIPT = "feature-script"
 }
 
+/**
+ * Returns the MenuType of the current selected menu.
+ */
 export function useCurrentMenuType(): MenuType {
-    let pathname = usePathname();
+    let pathname = useLocation().pathname;
     pathname = pathname.replace("/app/", "");
     for (const type of Object.values(MenuType)) {
         if (pathname.startsWith(type)) {
@@ -25,9 +28,9 @@ export function useCurrentMenuType(): MenuType {
  * Returns a handler which can be invoked to open a given menu.
  */
 export function useMenuRouter() {
-    const router = useRouter();
+    const navigate = useNavigate();
     return (menuType: MenuType) => {
-        router.push("/app/" + menuType);
+        navigate("/app/" + menuType);
     };
 }
 

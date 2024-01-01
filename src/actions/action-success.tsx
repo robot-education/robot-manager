@@ -1,7 +1,5 @@
-"use client";
-
 import { Intent } from "@blueprintjs/core";
-import { NonIdealStateOverride } from "@/common/non-ideal-state-override";
+import { NonIdealStateOverride } from "../common/non-ideal-state-override";
 import { ActionDialogBody } from "./action-dialog-body";
 import { ActionState } from "./action-state";
 import { ReactNode } from "react";

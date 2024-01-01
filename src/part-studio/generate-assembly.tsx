@@ -9,17 +9,17 @@ import {
 } from "@blueprintjs/core";
 import { useMutation } from "@tanstack/react-query";
 
-import { handleStringChange } from "@/common/handlers";
-import { ActionProvider } from "@/actions/action-dialog";
-import { ActionForm } from "@/actions/action-form";
-import { ActionSpinner } from "@/actions/action-spinner";
-import { ActionSuccess } from "@/actions/action-success";
-import { ActionInfo } from "@/actions/action-context";
-import { ActionCard } from "@/actions/action-card";
-import { useCurrentMutation } from "@/actions/action-utils";
-import { post } from "@/api/api";
-import { ElementPath, toElementQuery } from "@/api/path";
-import { useOnshapeParams } from "@/common/onshape-params";
+import { handleStringChange } from "../common/handlers";
+import { useOnshapeParams } from "../common/onshape-params";
+import { ActionProvider } from "../actions/action-dialog";
+import { ActionForm } from "../actions/action-form";
+import { ActionSpinner } from "../actions/action-spinner";
+import { ActionSuccess } from "../actions/action-success";
+import { ActionInfo } from "../actions/action-context";
+import { ActionCard } from "../actions/action-card";
+import { useCurrentMutation } from "../actions/action-utils";
+import { post } from "../api/api";
+import { ElementPath, toElementQuery } from "../api/path";
 
 const actionInfo: ActionInfo = {
     title: "Generate assembly",
@@ -47,9 +47,7 @@ export function GenerateAssembly() {
             "/generate-assembly",
             abortControllerRef.current.signal,
             toElementQuery(currentPath),
-            {
-                name: args.assemblyName
-            }
+            { name: args.assemblyName }
         );
         if (!result) {
             throw new Error("Request failed.");
@@ -69,8 +67,6 @@ export function GenerateAssembly() {
         mutationKey: [actionInfo.route],
         mutationFn: execute
     });
-
-    // console.log("Mutation status: " + mutation.status);
 
     const openButton = mutation.isSuccess && (
         <Button

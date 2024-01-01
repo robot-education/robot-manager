@@ -1,7 +1,5 @@
-"use client";
-
 import { MenuItem } from "@blueprintjs/core";
-import { MenuType, getMenuProps, useMenuRouter } from "@/common/menu-type";
+import { MenuType, getMenuProps, useMenuRouter } from "../common/menu-type";
 
 interface MenuTypeSelectItemProps {
     menuType: MenuType;

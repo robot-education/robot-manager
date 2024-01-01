@@ -1,4 +1,4 @@
-import { ActionCard } from "@/actions/action-card";
+import { ActionCard } from "../actions/action-card";
 
 const actionInfo = {
     title: "Update all references",
